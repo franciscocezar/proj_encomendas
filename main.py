@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import sqlite3
 
 from reportlab.pdfgen import canvas
@@ -116,14 +117,18 @@ class Funcs:
 
     def add_encomenda(self):
         self.variaveis()
-        self.conecta_bd()
+        if self.codigo_entry.get() == "" or self.destinatario_entry.get() == "":
+            msg = "Os campos 'Código' e 'Destinatário(a)' são obrigatórios."
+            messagebox.showinfo("AVISO", msg)
+        else:
+            self.conecta_bd()
 
-        self.cursor.execute(""" INSERT INTO Encomendas (codigo, destinatario, data_entrada, tipo, funcionario) 
-            VALUES (?, ?, ?, ?, ?)""", (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
-        self.conn.commit()
-        self.desconecta_bd()
-        self.select_lista()
-        self.limpa_tela()
+            self.cursor.execute(""" INSERT INTO Encomendas (codigo, destinatario, data_entrada, tipo, funcionario) 
+                VALUES (?, ?, ?, ?, ?)""", (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
+            self.conn.commit()
+            self.desconecta_bd()
+            self.select_lista()
+            self.limpa_tela()
 
     def altera_dados(self):
         self.variaveis()
@@ -139,12 +144,14 @@ class Funcs:
 
     def deleta_encomenda(self):
         self.variaveis()
-        self.conecta_bd()
-        self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id,))
-        self.conn.commit()
-        self.desconecta_bd()
-        self.limpa_tela()
-        self.select_lista()
+        msg = messagebox.askyesno(title="Aviso", message="Tem certeza de que deseja apagar?")
+        if msg:
+            self.conecta_bd()
+            self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id,))
+            self.conn.commit()
+            self.desconecta_bd()
+            self.limpa_tela()
+            self.select_lista()
 
     def select_lista(self):
         self.listaEnc.delete(*self.listaEnc.get_children())
@@ -194,8 +201,8 @@ class Application(Funcs, Relatorios):
         self.root.configure(bg='#1e3743')
         self.root.geometry("700x500")
         self.root.resizable(True, True)
-        self.root.maxsize(width=900, height=700)
-        self.root.minsize(width=750, height=600)
+        # self.root.maxsize(width=900, height=700)
+        self.root.minsize(width=900, height=700)
 
     def frames_da_tela(self):
         self.frame_1 = Frame(self.root, bd=4, bg='#dfe3ee',
@@ -235,7 +242,7 @@ class Application(Funcs, Relatorios):
         '''Entrada de Dados'''
         # Entrada ID
         self.id_entry = Entry(self.frame_1)
-        self.id_entry.place(relx=0.51, rely=0.1,  relwidth=0.07, relheight=0.15)
+        self.id_entry.place(relx=0.53, rely=0.1,  relwidth=0.03, relheight=0.08)
 
         # Label e Entrada Codigo
         self.lb_codigo = Label(self.frame_1, text="Código", bg='#dfe3ee', fg='#107db2')
