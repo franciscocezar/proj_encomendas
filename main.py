@@ -263,8 +263,9 @@ class Application(Funcs, Relatorios):
         self.lb_funcionario = Label(self.frame_1, text="Funcionário(a)", bg='#dfe3ee', fg='#107db2')
         self.lb_funcionario.place(relx=0.05, rely=0.6)
 
-        self.funcionario_entry = Entry(self.frame_1)
-        self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.5)
+        self.lt_funcs = ['Francisco Junior', 'Jonas Santos', 'Rosana Silva']
+        self.funcionario_entry = ttk.Combobox(self.frame_1, values=self.lt_funcs)
+        self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         # Label e Entrada Data
         self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='#dfe3ee', fg='#107db2')
@@ -274,7 +275,20 @@ class Application(Funcs, Relatorios):
         self.dataentrada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
 
     def lista_frame2(self):
-        self.listaEnc = ttk.Treeview(self.frame_2, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
+        # Abas
+        self.abas = ttk.Notebook(self.frame_2)
+        self.aba1 = Frame(self.abas)
+        self.aba2 = Frame(self.abas)
+
+        self.aba1.configure(background='#e6e6fa')
+        self.aba2.configure(background='#a3aece')
+
+        self.abas.add(self.aba1, text="Pendentes")
+        self.abas.add(self.aba2, text="Entregues")
+
+        self.abas.place(relx=0, rely=0, relwidth=0.99, relheight=0.99)
+
+        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
         self.listaEnc.heading("#0", text="")
         self.listaEnc.heading("#1", text="ID")
         self.listaEnc.heading("#2", text="Código")
@@ -293,7 +307,7 @@ class Application(Funcs, Relatorios):
 
         self.listaEnc.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
 
-        self.scrollLista = Scrollbar(self.frame_2, orient='vertical')
+        self.scrollLista = Scrollbar(self.aba1, orient='vertical')
         self.listaEnc.configure(yscrollcommand=self.scrollLista.set)
         self.scrollLista.place(relx=0.96, rely=0.1, relwidth=0.04, relheight=0.85)
         self.listaEnc.bind("<Double-1>", self.OnDoubleClick)
