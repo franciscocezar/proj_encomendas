@@ -9,6 +9,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Image
 import webbrowser
 
+from datetime import datetime
+
 root = Tk()
 
 
@@ -88,13 +90,17 @@ class Funcs:
         print("Bando de dados criado")
         self.desconecta_bd()
 
+    def data_hora(self):
+        dh = datetime.now()
+        return dh.strftime("%d/%m/%Y %H:%M")
+
     def variaveis(self):
         self.id = self.id_entry.get()
-        self.codigo = self.codigo_entry.get()
-        self.destinatario = self.destinatario_entry.get()
-        self.tipo = self.tipo_entry.get()
-        self.funcionario = self.funcionario_entry.get()
-        self.dataentrada = self.dataentrada_entry.get()
+        self.codigo = self.codigo_entry.get().upper()
+        self.destinatario = self.destinatario_entry.get().title()
+        self.tipo = self.tipo_entry.get().title()
+        self.funcionario = self.funcionario_entry.get().title()
+        self.dataentrada = self.data_hora()
 
     def OnDoubleClick(self, event):
         self.limpa_tela()
@@ -189,7 +195,7 @@ class Application(Funcs, Relatorios):
         self.root.geometry("700x500")
         self.root.resizable(True, True)
         self.root.maxsize(width=900, height=700)
-        self.root.minsize(width=500, height=400)
+        self.root.minsize(width=750, height=600)
 
     def frames_da_tela(self):
         self.frame_1 = Frame(self.root, bd=4, bg='#dfe3ee',
@@ -202,42 +208,44 @@ class Application(Funcs, Relatorios):
 
     def widgets_frame1(self):
         # Botão Limpar
-        self.bt_limpar = Button(self.frame_1, text="Limpar", bd=2, bg='#107db2', fg='white',
+        self.bt_limpar = Button(self.frame_1, text="Limpar", bd=2, bg='#107db2', fg='black',
                                 font=('verdana', 8, 'bold'), command=self.limpa_tela)
-        self.bt_limpar.place(relx=0.2, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_limpar.place(relx=0.3, rely=0.1, relwidth=0.1, relheight=0.15)
 
         # Botão Buscar
-        self.bt_buscar = Button(self.frame_1, text="Buscar", bd=2, bg='#107db2', fg='white',
+        self.bt_buscar = Button(self.frame_1, text="Buscar", bd=2, bg='#107db2', fg='black',
                                 font=('verdana', 8, 'bold'), command=self.busca_encomenda)
-        self.bt_buscar.place(relx=0.3, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_buscar.place(relx=0.4, rely=0.1, relwidth=0.1, relheight=0.15)
 
         # Botão Novo
-        self.bt_novo = Button(self.frame_1, text="Novo", bd=2, bg='#107db2', fg='white',
+        self.bt_novo = Button(self.frame_1, text="Novo", bd=2, bg='#107db2', fg='black',
                               font=('verdana', 8, 'bold'), command=self.add_encomenda)
         self.bt_novo.place(relx=0.6, rely=0.1, relwidth=0.1, relheight=0.15)
 
         # Botão alterar
-        self.bt_alterar = Button(self.frame_1, text="Alterar", bd=2, bg='#107db2', fg='white',
+        self.bt_alterar = Button(self.frame_1, text="Alterar", bd=2, bg='#107db2', fg='black',
                                  font=('verdana', 8, 'bold'), command=self.altera_dados)
         self.bt_alterar.place(relx=0.7, rely=0.1, relwidth=0.1, relheight=0.15)
 
         # Criação do botao apagar
-        self.bt_apagar = Button(self.frame_1, text="Apagar", bd=2, bg='#107db2', fg='white'
+        self.bt_apagar = Button(self.frame_1, text="Apagar", bd=2, bg='#107db2', fg='black'
                                 , font=('verdana', 8, 'bold'), command=self.deleta_encomenda)
         self.bt_apagar.place(relx=0.8, rely=0.1, relwidth=0.1, relheight=0.15)
 
         '''Entrada de Dados'''
         # Entrada ID
         self.id_entry = Entry(self.frame_1)
-        self.id_entry.place(relx=0.45, rely=0.1,  relwidth=0.07)
+        self.id_entry.place(relx=0.51, rely=0.1,  relwidth=0.07, relheight=0.15)
+
         # Label e Entrada Codigo
         self.lb_codigo = Label(self.frame_1, text="Código", bg='#dfe3ee', fg='#107db2')
         self.lb_codigo.place(relx=0.05, rely=0.05)
 
         self.codigo_entry = Entry(self.frame_1)
-        self.codigo_entry.place(relx=0.05, rely=0.15, relwidth=0.08)
+        self.codigo_entry.place(relx=0.05, rely=0.15, relwidth=0.20)
 
         # Label e Entrada Destinatário
+
         self.lb_destinatario = Label(self.frame_1, text="Destinatário(a)", bg='#dfe3ee', fg='#107db2')
         self.lb_destinatario.place(relx=0.05, rely=0.35)
 
@@ -277,10 +285,10 @@ class Application(Funcs, Relatorios):
 
         self.listaEnc.column("#0", width=1)
         self.listaEnc.column("#1", width=1)
-        self.listaEnc.column("#2", width=130)
-        self.listaEnc.column("#3", width=100)
-        self.listaEnc.column("#4", width=60)
-        self.listaEnc.column("#5", width=50)
+        self.listaEnc.column("#2", width=90)
+        self.listaEnc.column("#3", width=110)
+        self.listaEnc.column("#4", width=80)
+        self.listaEnc.column("#5", width=70)
         self.listaEnc.column("#6", width=70)
 
         self.listaEnc.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
