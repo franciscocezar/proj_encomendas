@@ -50,7 +50,7 @@ class Application(Funcs, Relatorios):
 
     def tela(self):
         self.root.title("Registro de Encomendas")
-        self.root.configure(bg='#1e3743')
+        self.root.configure(bg='gray20')
         self.root.geometry("700x500")
         self.root.resizable(True, True)
         # self.root.maxsize(width=900, height=700)
@@ -60,46 +60,45 @@ class Application(Funcs, Relatorios):
         self.root.attributes('-alpha', 1.0)
 
     def frames_da_tela(self):
-        self.frame_1 = GradientFrame(self.root,
-                                     highlightbackground='black', highlightthickness=3)
+        self.frame_1 = atk.Frame3d(self.root)
         self.frame_1.place(relx=0.02, rely=0.02, relwidth=0.96, relheight=0.46)
 
-        self.frame_2 = GradientFrame(self.root, highlightbackground='#759fe6', highlightthickness=3)
+        self.frame_2 = atk.Frame3d(self.root)
         self.frame_2.place(relx=0.02, rely=0.5, relwidth=0.96, relheight=0.46)
 
     def widgets_frame1(self):
         # Botão Limpar
-        self.bt_limpar = Button(self.frame_1, text="Limpar", bd=1, bg='#107db2', fg='black',
-                                font=('verdana', 8, 'bold'), command=self.limpa_tela)
+        self.bt_limpar = atk.Button3d(self.frame_1, text="Limpar", command=self.limpa_tela)
         self.bt_limpar.place(relx=0.3, rely=0.1, relwidth=0.1, relheight=0.15)
+        atk.tooltip(self.bt_limpar, "Limpar Campos")
 
         # Botão Buscar
-        self.bt_buscar = Button(self.frame_1, text="Buscar", bd=1, bg='#107db2', fg='black',
-                                font=('verdana', 8, 'bold'), command=self.busca_encomenda)
-        self.bt_buscar.place(relx=0.4, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_buscar = atk.Button3d(self.frame_1, text="Buscar", command=self.busca_encomenda)
+        self.bt_buscar.place(relx=0.41, rely=0.1, relwidth=0.1, relheight=0.15)
+        atk.tooltip(self.bt_buscar, 'Buscar por Nome')
 
         # Botão Novo
-        self.bt_novo = Button(self.frame_1, text="Novo", bd=1, bg='#107db2', fg='black',
-                              font=('verdana', 8, 'bold'), command=self.add_encomenda)
-        self.bt_novo.place(relx=0.6, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_novo = atk.Button3d(self.frame_1, text="Novo", command=self.add_encomenda)
+        self.bt_novo.place(relx=0.63, rely=0.1, relwidth=0.1, relheight=0.15)
+        atk.tooltip(self.bt_novo, 'Registar Nova Encomenda')
 
         # Botão alterar
-        self.bt_alterar = Button(self.frame_1, text="Alterar", bd=1, bg='#107db2', fg='black',
-                                 font=('verdana', 8, 'bold'), command=self.altera_dados)
-        self.bt_alterar.place(relx=0.7, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_alterar = atk.Button3d(self.frame_1, text="Alterar", command=self.altera_dados)
+        self.bt_alterar.place(relx=0.74, rely=0.1, relwidth=0.1, relheight=0.15)
+        atk.tooltip(self.bt_alterar, 'Alterar Dados')
 
         # Criação do botao apagar
-        self.bt_apagar = Button(self.frame_1, text="Apagar", bd=1, bg='#107db2', fg='black'
-                                , font=('verdana', 8, 'bold'), command=self.deleta_encomenda)
-        self.bt_apagar.place(relx=0.8, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_apagar = atk.Button3d(self.frame_1, text="Apagar", command=self.deleta_encomenda)
+        self.bt_apagar.place(relx=0.85, rely=0.1, relwidth=0.1, relheight=0.15)
+        atk.tooltip(self.bt_apagar, 'Exclui Registro')
 
         '''Entrada de Dados'''
         # Entrada ID
         self.id_entry = Entry(self.frame_1)
-        self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
+        # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
 
         # Label e Entrada Codigo
-        self.lb_codigo = Label(self.frame_1, text="Código", bg='#dfe3ee', fg='#107db2')
+        self.lb_codigo = Label(self.frame_1, text="Código", bg='gray20', fg='white')
         self.lb_codigo.place(relx=0.05, rely=0.05)
 
         self.codigo_entry = EntPlaceHold(self.frame_1, 'Digite o Código')
@@ -107,21 +106,21 @@ class Application(Funcs, Relatorios):
 
         # Label e Entrada Destinatário
 
-        # self.lb_destinatario = Label(self.frame_1, text="Destinatário(a)", bg='#dfe3ee', fg='#107db2')
-        # self.lb_destinatario.place(relx=0.05, rely=0.35)
+        self.lb_destinatario = Label(self.frame_1, text="Destinatário(a)", bg='gray20', fg='white')
+        self.lb_destinatario.place(relx=0.05, rely=0.35)
 
         self.destinatario_entry = EntPlaceHold(self.frame_1, 'Digite o nome do Destinatário(a)')
         self.destinatario_entry.place(relx=0.05, rely=0.45, relwidth=0.5)
 
         # Label e Entrada Tipo de Encomenda
-        self.lb_tipo = Label(self.frame_1, text="Tipo", bg='#dfe3ee', fg='#107db2')
+        self.lb_tipo = Label(self.frame_1, text="Tipo", bg='gray20', fg='white')
         self.lb_tipo.place(relx=0.6, rely=0.35)
 
         self.tipo_entry = EntPlaceHold(self.frame_1, 'Digite o Tipo de Encomenda')
         self.tipo_entry.place(relx=0.6, rely=0.45, relwidth=0.30)
 
         # Label e Entrada Funcionário
-        self.lb_funcionario = Label(self.frame_1, text="Funcionário(a)", bg='#dfe3ee', fg='#107db2')
+        self.lb_funcionario = Label(self.frame_1, text="Funcionário(a)", bg='gray20', fg='white')
         self.lb_funcionario.place(relx=0.05, rely=0.6)
 
         self.lt_funcs = ['Francisco Junior', 'Jonas Santos', 'Rosana Silva']
@@ -129,7 +128,7 @@ class Application(Funcs, Relatorios):
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         # Label e Entrada Data
-        self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='#dfe3ee', fg='#107db2')
+        self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='gray20', fg='white')
         self.lb_dataentrada.place(relx=0.6, rely=0.6)
 
         self.dataentrada_entry = Entry(self.frame_1)
@@ -147,7 +146,7 @@ class Application(Funcs, Relatorios):
         self.abas.add(self.aba1, text="Pendentes")
         self.abas.add(self.aba2, text="Entregues")
 
-        self.abas.place(relx=0, rely=0, relwidth=1, relheight=1)
+        self.abas.place(relx=0.01, rely=0.02, relwidth=0.96, relheight=0.962)
 
         self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
         self.listaEnc.heading("#0", text="")
@@ -166,11 +165,11 @@ class Application(Funcs, Relatorios):
         self.listaEnc.column("#5", width=70)
         self.listaEnc.column("#6", width=70)
 
-        self.listaEnc.place(relx=0.01, rely=0.1, relwidth=0.95, relheight=0.85)
+        self.listaEnc.place(relx=0, rely=0.01, relwidth=0.97, relheight=0.97)
 
         self.scrollLista = Scrollbar(self.aba1, orient='vertical')
         self.listaEnc.configure(yscrollcommand=self.scrollLista.set)
-        self.scrollLista.place(relx=0.96, rely=0.1, relwidth=0.02, relheight=0.85)
+        self.scrollLista.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
         self.listaEnc.bind("<Double-1>", self.OnDoubleClick)
 
     def Menus(self):
@@ -189,14 +188,5 @@ class Application(Funcs, Relatorios):
 
         filemenu2.add_command(label="Dados Encomenda", command=self.geraRelatEncomenda)
 
-
-
-
-
-# root.attributes('-alpha', 0.0) # Opcional, para deixar a janela totalmente transparente até os ajustes serem feitos.
-# root.minsize(750, 600)
-# center(root) # A função
-#
-# root.attributes('-alpha', 1.0) # A interface fica visível novamente.
 
 Application()

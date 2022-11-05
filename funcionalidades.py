@@ -64,7 +64,9 @@ class Funcs:
 
     def add_encomenda(self):
         self.variaveis()
-        if self.codigo_entry.get() == "" or self.destinatario_entry.get() == "":
+        dicionario = {'cod': "Digite o Código", 'cod2': "", 'dest': "Digite o nome do Destinatário(a)", 'dest2': ""}
+
+        if self.codigo_entry.get() in dicionario.values() or self.destinatario_entry.get() in dicionario.values():
             msg = "Os campos 'Código' e 'Destinatário(a)' são obrigatórios."
             messagebox.showinfo("AVISO", msg)
         else:
