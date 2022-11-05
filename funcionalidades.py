@@ -9,7 +9,7 @@ class Funcs:
         self.destinatario_entry.delete(0, END)
         self.tipo_entry.delete(0, END)
         self.funcionario_entry.delete(0, END)
-        self.dataentrada_entry.delete(0, END)
+        # self.dataentrada_entry.delete(0, END)
 
     def conecta_bd(self):
         self.conn = sqlite3.connect("bancodados_encomendas.db")
@@ -107,7 +107,7 @@ class Funcs:
         self.listaEnc.delete(*self.listaEnc.get_children())
         self.conecta_bd()
         lista = self.cursor.execute(""" SELECT id, codigo, destinatario, data_entrada, tipo, funcionario FROM Encomendas
-            ORDER BY destinatario ASC; """)
+                                        ORDER BY destinatario ASC; """)
         for i in lista:
             self.listaEnc.insert("", END, values=i)
         self.desconecta_bd()

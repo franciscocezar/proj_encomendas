@@ -128,11 +128,16 @@ class Application(Funcs, Relatorios):
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         # Label e Entrada Data
-        self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='gray20', fg='white')
-        self.lb_dataentrada.place(relx=0.6, rely=0.6)
+        self.lb_retirada = Label(self.frame_1, text="Retirada Por:", bg='gray20', fg='white')
+        self.lb_retirada.place(relx=0.6, rely=0.6)
 
-        self.dataentrada_entry = Entry(self.frame_1)
-        self.dataentrada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
+        self.retirada_entry = Entry(self.frame_1)
+        self.retirada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
+        # self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='gray20', fg='white')
+        # self.lb_dataentrada.place(relx=0.6, rely=0.6)
+        #
+        # self.dataentrada_entry = Entry(self.frame_1)
+        # self.dataentrada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
 
     def lista_frame2(self):
         # Abas
@@ -147,6 +152,16 @@ class Application(Funcs, Relatorios):
         self.abas.add(self.aba2, text="Entregues")
 
         self.abas.place(relx=0.01, rely=0.02, relwidth=0.96, relheight=0.962)
+
+        style = ttk.Style()
+        # style.theme_use('alt')
+        style.configure("Treeview",
+                        background='gray20',
+                        foreground='white',
+                        rowheight=25,
+                        fielbackground='gray20')
+
+        style.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
 
         self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
         self.listaEnc.heading("#0", text="")
