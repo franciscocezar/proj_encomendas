@@ -17,6 +17,7 @@ class Application(Funcs, Relatorios):
         self.lista_frame2()
         self.montaTabelas()
         self.select_lista()
+        self.select_lista2()
         self.Menus()
         root.mainloop()
 
@@ -93,8 +94,16 @@ class Application(Funcs, Relatorios):
         atk.tooltip(self.bt_apagar, 'Exclui Registro')
 
         '''Entrada de Dados'''
-        # Entrada ID
+        # Entrada IDs
         self.id_entry = Entry(self.frame_1)
+        self.id_ent_entry = Entry(self.frame_1)
+
+
+        #Botão Retirada/Confirmar
+        self.bt_reti = atk.Button3d(self.frame_1, text='Confirmar Retirada', command=self.add_encomenda)
+        self.bt_reti.place(relx=0.6, rely=0.8, relwidth=0.2, relheight=0.15)
+
+
         # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
 
         # Label e Entrada Codigo
@@ -142,17 +151,16 @@ class Application(Funcs, Relatorios):
     def lista_frame2(self):
         # Abas
         self.abas = ttk.Notebook(self.frame_2)
-        self.aba1 = GradientFrame(self.abas)
-        self.aba2 = GradientFrame(self.abas)
-
-        # self.aba1.configure(background='#e6e6fa')
-        # self.aba2.configure(background='#a3aece')
-
-        self.abas.add(self.aba1, text="Pendentes")
-        self.abas.add(self.aba2, text="Entregues")
-
         self.abas.place(relx=0.01, rely=0.02, relwidth=0.96, relheight=0.962)
 
+        self.aba1 = GradientFrame(self.abas)
+
+        # self.aba1.configure(background='#e6e6fa')
+
+        self.abas.add(self.aba1, text="Pendentes")
+
+
+        #  *** ABA PENDENTES ***
         style = ttk.Style()
         # style.theme_use('alt')
         style.configure("Treeview",
@@ -186,6 +194,48 @@ class Application(Funcs, Relatorios):
         self.listaEnc.configure(yscrollcommand=self.scrollLista.set)
         self.scrollLista.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
         self.listaEnc.bind("<Double-1>", self.OnDoubleClick)
+
+
+        # *** ABA ENTREGUES ***
+
+        self.aba2 = GradientFrame(self.abas)
+        # self.aba2.configure(background='#a3aece')
+        self.abas.add(self.aba2, text="Entregues")
+
+        style2 = ttk.Style()
+        # style.theme_use('alt')
+        style2.configure("Treeview",
+                            background='gray20',
+                            foreground='white',
+                            rowheight=25,
+                            fielbackground='gray20')
+
+        style2.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
+
+        self.listaEntregues = ttk.Treeview(self.aba2, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
+        self.listaEntregues.heading("#0", text="")
+        self.listaEntregues.heading("#1", text="Id_ent")
+        self.listaEntregues.heading("#2", text="Id_pen")
+        self.listaEntregues.heading("#3", text="Código")
+        self.listaEntregues.heading("#4", text="Destinatário(a)")
+        self.listaEntregues.heading("#5", text="Data_Retirada")
+        self.listaEntregues.heading("#6", text="Retirada_por")
+
+        self.listaEntregues.column("#0", width=1)
+        self.listaEntregues.column("#1", width=1)
+        self.listaEntregues.column("#2", width=1)
+        self.listaEntregues.column("#3", width=90)
+        self.listaEntregues.column("#4", width=80)
+        self.listaEntregues.column("#5", width=70)
+        self.listaEntregues.column("#6", width=70)
+
+        self.listaEntregues.place(relx=0, rely=0.01, relwidth=0.97, relheight=0.97)
+
+        self.scrollLista2 = Scrollbar(self.aba2, orient='vertical')
+        self.listaEntregues.configure(yscrollcommand=self.scrollLista2.set)
+        self.scrollLista2.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
+        self.listaEntregues.bind("<Double-1>", self.SecondDoubleClick)
+
 
     def Menus(self):
         menubar = Menu(self.root)
