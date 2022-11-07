@@ -190,8 +190,6 @@ class Funcs:
         self.variaveis()
         msg = messagebox.askyesno(title="Aviso", message="Tem certeza de que deseja apagar?", icon='warning')
         if msg:
-
-
             self.conecta_bd()
 
             self.cursor.execute(""" DELETE FROM Entregues WHERE id_ent = ? """, (self.id_ent,))
@@ -204,7 +202,6 @@ class Funcs:
             self.select_lista2()
             self.select_lista()
             self.limpa_tela()
-
 
     def select_lista(self):
         # Mostra o Banco de Dados na Tela - Aba Pendentes
@@ -219,8 +216,14 @@ class Funcs:
                                         ORDER BY data_entrada ASC; """)
 
         # Pega os dados selecionados e os monstra na tela
+        count = 0
         for i in lista:
-            self.listaEnc.insert("", END, values=i)
+            if count % 2 == 0:
+                self.listaEnc.insert("", END, values=i, iid=count, tag=('evenrow',))
+            else:
+                self.listaEnc.insert("", END, values=i, iid=count, tag=('oddrow',))
+            count += 1
+
         self.desconecta_bd()
 
     def select_lista2(self):
@@ -230,8 +233,14 @@ class Funcs:
         lista = self.cursor.execute(""" SELECT id_ent, id_pen, codigo, destinatario, data_retirada, retirada_por 
                                         FROM Entregues
                                         ORDER BY data_retirada DESC; """)
+        count = 0
         for i in lista:
-            self.listaEntregues.insert("", END, values=i)
+            if count % 2 == 0:
+                self.listaEntregues.insert("", END, values=i, iid=count, tag=('evenrow',))
+            else:
+                self.listaEntregues.insert("", END, values=i, iid=count, tag=('oddrow',))
+            count += 1
+
         self.desconecta_bd()
 
     def busca_encomenda(self):

@@ -99,8 +99,8 @@ class Application(Funcs, Relatorios):
         self.id_ent_entry = Entry(self.frame_1)
 
         # Botão Retirada/Confirmar
-        self.bt_reti = atk.Button3d(self.frame_1, text='Confirmar Retirada', command=self.add_saida)
-        self.bt_reti.place(relx=0.6, rely=0.8, relwidth=0.2, relheight=0.15)
+        # self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar Retirada', command=self.add_saida)
+        # self.bt_reti.place(relx=0.6, rely=0.8, relwidth=0.2, relheight=0.15)
 
         # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
 
@@ -124,7 +124,7 @@ class Application(Funcs, Relatorios):
         self.lb_tipo.place(relx=0.6, rely=0.35)
 
         self.tipo_entry = Entry(self.frame_1)
-        self.tipo_entry.place(relx=0.6, rely=0.45, relwidth=0.30)
+        self.tipo_entry.place(relx=0.5970, rely=0.45, relwidth=0.306)
 
         # Label e Entrada Funcionário
         self.lb_funcionario = Label(self.frame_1, text="Funcionário(a)", bg='gray20', fg='white')
@@ -135,12 +135,16 @@ class Application(Funcs, Relatorios):
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         # Label e Entrada Data
-        self.lb_retirada = Label(self.frame_1, text="Retirada Por:", bg='gray20', fg='white')
-        self.lb_retirada.place(relx=0.6, rely=0.6)
+        # self.lb_retirada = Label(self.frame_1, text="Retirada Por:", bg='gray20', fg='white')
+        self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
+        self.lb_retirada.place(relx=0.6, rely=0.56, relwidth=0.3, relheight=0.37)
 
-        self.retirada_entry = Entry(self.frame_1)
-        self.retirada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
+        self.retirada_entry = Entry(self.lb_retirada)
+        self.retirada_entry.place(relx=0.05, rely=0.03, relwidth=0.90)
 
+        # Botão Retirada/Confirmar
+        self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar', command=self.add_saida)
+        self.bt_reti.place(relx=0.06, rely=0.45, relwidth=0.45, relheight=0.45)
 
     def lista_frame2(self):
         # Abas
@@ -157,14 +161,14 @@ class Application(Funcs, Relatorios):
         style = ttk.Style()
         # style.theme_use('alt')
         style.configure("Treeview",
-                        background='gray20',
-                        foreground='white',
-                        rowheight=25,
-                        fielbackground='gray20')
+                         background='gray20',
+                         foreground='white',
+                         rowheight=25,
+                         fielbackground='gray20')
 
         style.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
 
-        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
+        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"), selectmode='extended')
         self.listaEnc.heading("#0", text="", )
         self.listaEnc.heading("#1", text="ID")
         self.listaEnc.heading("#2", text="Código")
@@ -181,6 +185,10 @@ class Application(Funcs, Relatorios):
         self.listaEnc.column("#5", width=70, anchor="center")
         self.listaEnc.column("#6", width=70, anchor="center")
 
+        # Cor da linha sem estar selecionada
+        self.listaEnc.tag_configure('oddrow', background='gray20')
+        self.listaEnc.tag_configure('evenrow', background='gray10')
+
         self.listaEnc.place(relx=0, rely=0.01, relwidth=0.97, relheight=0.97)
 
         self.scrollLista = Scrollbar(self.aba1, orient='vertical')
@@ -191,21 +199,10 @@ class Application(Funcs, Relatorios):
         # *** ABA ENTREGUES ***
 
         self.aba2 = GradientFrame(self.abas)
-        # self.aba2.configure(background='#a3aece')
         self.abas.add(self.aba2, text="Entregues")
 
-        style2 = ttk.Style()
-        # style.theme_use('alt')
-        style2.configure("Treeview",
-                         background='gray20',
-                         foreground='white',
-                         rowheight=25,
-                         fielbackground='gray20')
-
-        style2.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
-
         self.listaEntregues = ttk.Treeview(self.aba2, height=3,
-                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"))
+                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"), selectmode='extended')
         self.listaEntregues.heading("#0", text="",)
         self.listaEntregues.heading("#1", text="ID")
         self.listaEntregues.heading("#2", text="ID-Pen")
@@ -221,6 +218,10 @@ class Application(Funcs, Relatorios):
         self.listaEntregues.column("#4", width=80, anchor="center")
         self.listaEntregues.column("#5", width=70, anchor="center")
         self.listaEntregues.column("#6", width=70, anchor="center")
+
+        # Cor da linha sem estar selecionada
+        self.listaEntregues.tag_configure('oddrow', background='gray20')
+        self.listaEntregues.tag_configure('evenrow', background='gray10')
 
         self.listaEntregues.place(relx=0, rely=0.01, relwidth=0.97, relheight=0.97)
 
