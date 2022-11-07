@@ -98,11 +98,9 @@ class Application(Funcs, Relatorios):
         self.id_entry = Entry(self.frame_1)
         self.id_ent_entry = Entry(self.frame_1)
 
-
-        #Botão Retirada/Confirmar
-        self.bt_reti = atk.Button3d(self.frame_1, text='Confirmar Retirada', command=self.add_encomenda)
+        # Botão Retirada/Confirmar
+        self.bt_reti = atk.Button3d(self.frame_1, text='Confirmar Retirada', command=self.add_saida)
         self.bt_reti.place(relx=0.6, rely=0.8, relwidth=0.2, relheight=0.15)
-
 
         # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
 
@@ -110,7 +108,7 @@ class Application(Funcs, Relatorios):
         self.lb_codigo = Label(self.frame_1, text="Código", bg='gray20', fg='white')
         self.lb_codigo.place(relx=0.05, rely=0.05)
 
-        self.codigo_entry = EntPlaceHold(self.frame_1, 'Digite o Código')
+        self.codigo_entry = Entry(self.frame_1)
         self.codigo_entry.place(relx=0.05, rely=0.15, relwidth=0.20)
 
         # Label e Entrada Destinatário
@@ -118,14 +116,14 @@ class Application(Funcs, Relatorios):
         self.lb_destinatario = Label(self.frame_1, text="Destinatário(a)", bg='gray20', fg='white')
         self.lb_destinatario.place(relx=0.05, rely=0.35)
 
-        self.destinatario_entry = EntPlaceHold(self.frame_1, 'Digite o nome do Destinatário(a)')
+        self.destinatario_entry = Entry(self.frame_1)
         self.destinatario_entry.place(relx=0.05, rely=0.45, relwidth=0.5)
 
         # Label e Entrada Tipo de Encomenda
         self.lb_tipo = Label(self.frame_1, text="Tipo", bg='gray20', fg='white')
         self.lb_tipo.place(relx=0.6, rely=0.35)
 
-        self.tipo_entry = EntPlaceHold(self.frame_1, 'Digite o Tipo de Encomenda')
+        self.tipo_entry = Entry(self.frame_1)
         self.tipo_entry.place(relx=0.6, rely=0.45, relwidth=0.30)
 
         # Label e Entrada Funcionário
@@ -142,11 +140,7 @@ class Application(Funcs, Relatorios):
 
         self.retirada_entry = Entry(self.frame_1)
         self.retirada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
-        # self.lb_dataentrada = Label(self.frame_1, text="Data de Entrada", bg='gray20', fg='white')
-        # self.lb_dataentrada.place(relx=0.6, rely=0.6)
-        #
-        # self.dataentrada_entry = Entry(self.frame_1)
-        # self.dataentrada_entry.place(relx=0.6, rely=0.7, relwidth=0.3)
+
 
     def lista_frame2(self):
         # Abas
@@ -158,7 +152,6 @@ class Application(Funcs, Relatorios):
         # self.aba1.configure(background='#e6e6fa')
 
         self.abas.add(self.aba1, text="Pendentes")
-
 
         #  *** ABA PENDENTES ***
         style = ttk.Style()
@@ -172,7 +165,7 @@ class Application(Funcs, Relatorios):
         style.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
 
         self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
-        self.listaEnc.heading("#0", text="")
+        self.listaEnc.heading("#0", text="", )
         self.listaEnc.heading("#1", text="ID")
         self.listaEnc.heading("#2", text="Código")
         self.listaEnc.heading("#3", text="Destinatário(a)")
@@ -195,7 +188,6 @@ class Application(Funcs, Relatorios):
         self.scrollLista.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
         self.listaEnc.bind("<Double-1>", self.OnDoubleClick)
 
-
         # *** ABA ENTREGUES ***
 
         self.aba2 = GradientFrame(self.abas)
@@ -205,15 +197,16 @@ class Application(Funcs, Relatorios):
         style2 = ttk.Style()
         # style.theme_use('alt')
         style2.configure("Treeview",
-                            background='gray20',
-                            foreground='white',
-                            rowheight=25,
-                            fielbackground='gray20')
+                         background='gray20',
+                         foreground='white',
+                         rowheight=25,
+                         fielbackground='gray20')
 
         style2.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
 
-        self.listaEntregues = ttk.Treeview(self.aba2, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"))
-        self.listaEntregues.heading("#0", text="")
+        self.listaEntregues = ttk.Treeview(self.aba2, height=3,
+                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"))
+        self.listaEntregues.heading("#0", text="",)
         self.listaEntregues.heading("#1", text="Id_ent")
         self.listaEntregues.heading("#2", text="Id_pen")
         self.listaEntregues.heading("#3", text="Código")
@@ -235,7 +228,6 @@ class Application(Funcs, Relatorios):
         self.listaEntregues.configure(yscrollcommand=self.scrollLista2.set)
         self.scrollLista2.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
         self.listaEntregues.bind("<Double-1>", self.SecondDoubleClick)
-
 
     def Menus(self):
         menubar = Menu(self.root)

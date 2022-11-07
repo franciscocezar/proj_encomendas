@@ -24,15 +24,37 @@ class Funcs:
         self.conecta_bd()
 
         # Criar Tabela
-        self.cursor.execute("""
-         CREATE TABLE IF NOT EXISTS Quarentena(
+        self.quarentenabd = self.cursor.execute("""
+         CREATE TABLE IF NOT EXISTS quarentena_bd(
+            id INTEGER PRIMARY KEY,
+            id_pen INTEGER,
+            id_ent INTEGER,
+            codigo CHAR(40),
+            destinatario CHAR(40),
+            data_entrada DATE,
+            tipo CHAR(20),
+            funcionario CHAR(40),
+            data_retirada DATE,
+            retirada_por CHAR(40)
+        );""")
+        self.conn.commit()
+        self.encomendasbd = self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Encomendas(
             id INTEGER PRIMARY KEY,
             codigo CHAR(40) NOT NULL,
             destinatario CHAR(40) NOT NULL,
             data_entrada DATE,
             tipo CHAR(20),
-            funcionario CHAR(40)
-        );""")
+            funcionario CHAR(40));""")
+        self.conn.commit()
+        self.entreguesbd = self.cursor.execute("""
+                CREATE TABLE IF NOT EXISTS Entregues(
+                    id_ent INTEGER PRIMARY KEY,
+                    id_pen INTEGER,
+                    codigo CHAR(40),
+                    destinatario CHAR(40),
+                    data_retirada DATE,
+                    retirada_por CHAR(40));""")
         self.conn.commit()
         print("Bando de dados criado")
         self.desconecta_bd()
@@ -42,7 +64,7 @@ class Funcs:
         return dh.strftime("%d/%m/%Y %H:%M")
 
     def variaveis(self):
-        self.id = self.id_entry.get()
+        self.id_pen = self.id_entry.get()
         self.codigo = self.codigo_entry.get().upper()
         self.destinatario = self.destinatario_entry.get().title()
         self.tipo = self.tipo_entry.get().title()
@@ -54,10 +76,16 @@ class Funcs:
         self.data_retirada = self.data_hora()
 
     def OnDoubleClick(self, event):
+        # Função Duplo Clique na lista mostrada na tela.
+
+        # Primeiro, apaga os dados que já estiverem nas Entrys, para não dar conflito.
         self.limpa_tela()
 
+        # Seleciona o item clicado e os insere de volta nos campos Entry.
         for n in self.listaEnc.selection():
+            # Desempacota a lista.
             col1, col2, col3, col4, col5, col6 = self.listaEnc.item(n, 'values')
+            # Insere cada item em sua respectiva variável entry.
             self.id_entry.insert(END, col1)
             self.codigo_entry.insert(END, col2)
             self.destinatario_entry.insert(END, col3)
@@ -74,7 +102,7 @@ class Funcs:
             self.id_entry.insert(END, col2)
             self.codigo_entry.insert(END, col3)
             self.destinatario_entry.insert(END, col4)
-            self.data_retirada_entry.insert(END, col5)
+            # self.data_retirada_entry.insert(END, col5)
             self.retirada_entry.insert(END, col6)
 
     def add_encomenda(self):
@@ -83,83 +111,124 @@ class Funcs:
 
         if self.codigo_entry.get() in dicionario.values() or self.destinatario_entry.get() in dicionario.values():
             msg = "Os campos 'Código' e 'Destinatário(a)' são obrigatórios."
-            messagebox.showinfo("AVISO", msg)
+            messagebox.showinfo(title="AVISO", message=msg)
         else:
-            if self.retirada_entry.get():
-                self.conecta_bd()
 
-                self.cursor.execute(""" INSERT INTO Entregues (id_pen, codigo, destinatario, 
-                                                                                data_retirada, retirada_por) 
-                                                        VALUES (?, ?, ?, ?, ?)""",
-                                    (self.id, self.codigo, self.destinatario,
-                                     self.data_retirada, self.retirada_por))
-                self.conn.commit()
-                self.desconecta_bd()
-                self.select_lista2()
-                self.limpa_tela()
+            self.conecta_bd()
 
-                self.conecta_bd()
-                self.cursor.execute(""" INSERT INTO Quarentena (codigo, destinatario, data_entrada, tipo, funcionario) 
-                                                                    VALUES (?, ?, ?, ?, ?)""",
-                                    (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
-                self.conn.commit()
-                self.desconecta_bd()
-
-                self.conecta_bd()
-                self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id,))
-                self.conn.commit()
-                self.desconecta_bd()
-                self.limpa_tela()
-                self.select_lista()
-            else:
-                self.conecta_bd()
-
-                self.cursor.execute(""" INSERT INTO Encomendas (codigo, destinatario, data_entrada, tipo, funcionario) 
+            self.cursor.execute(""" INSERT INTO Encomendas (codigo, destinatario, data_entrada, tipo, funcionario) 
                                     VALUES (?, ?, ?, ?, ?)""",
-                                    (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
-                self.conn.commit()
-                self.desconecta_bd()
-                self.select_lista()
-                self.limpa_tela()
+                                (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
+            self.conn.commit()
+            self.desconecta_bd()
+            self.select_lista()
+            self.limpa_tela()
+
+    def add_saida(self):
+        self.variaveis()
+
+        if not self.retirada_entry.get():
+            msg = "Informe a pessoa que retirou a encomenda."
+            messagebox.showinfo(title="AVISO", message=msg)
+        else:
+
+            self.conecta_bd()
+
+            self.cursor.execute(""" INSERT INTO Entregues (id_pen, codigo, destinatario, data_retirada, retirada_por) 
+                                    VALUES (?, ?, ?, ?, ?)""",
+                                (self.id_pen, self.codigo, self.destinatario, self.data_retirada, self.retirada_por))
+            self.conn.commit()
+            self.desconecta_bd()
+            self.select_lista2()
+            self.limpa_tela()
+
+            self.conecta_bd()
+            self.cursor.execute(""" INSERT INTO quarentena_bd (id_pen, id_ent, codigo, destinatario, 
+                                                               data_entrada, tipo, funcionario, 
+                                                               data_retirada, retirada_por) 
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                (self.id_pen, self.id_ent, self.codigo, self.destinatario,
+                                 self.dataentrada, self.tipo, self.funcionario, self.data_retirada, self.retirada_por))
+            self.conn.commit()
+            self.desconecta_bd()
+
+            self.conecta_bd()
+            self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id_pen,))
+            self.conn.commit()
+            self.desconecta_bd()
+            self.limpa_tela()
+            self.select_lista()
 
     def altera_dados(self):
         self.variaveis()
 
         self.conecta_bd()
         self.cursor.execute(""" 
-            UPDATE Encomendas 
-            SET codigo = ?, destinatario = ?, data_entrada = ?, tipo = ?, funcionario = ?
-            WHERE id = ? """, (self.codigo, self.destinatario,
-                                   self.dataentrada, self.tipo, self.funcionario, self.id))
+                        UPDATE Encomendas 
+                        SET codigo = ?, destinatario = ?, data_entrada = ?, tipo = ?, funcionario = ?
+                        WHERE id = ? """, (self.codigo, self.destinatario,
+                                           self.dataentrada, self.tipo, self.funcionario, self.id_pen))
         self.conn.commit()
         self.desconecta_bd()
         self.select_lista()
         self.limpa_tela()
 
+    def alterar_saida(self):
+        self.variaveis()
+
+        self.conecta_bd()
+        self.cursor.execute(""" 
+                                   UPDATE Entregues 
+                                   SET retirada_por = ?
+                                   WHERE id_ent = ? """, (self.retirada_por, self.id_ent))
+        self.conn.commit()
+        self.desconecta_bd()
+        self.select_lista2()
+        self.limpa_tela()
+
     def deleta_encomenda(self):
         self.variaveis()
-        msg = messagebox.askyesno(title="Aviso", message="Tem certeza de que deseja apagar?")
+        msg = messagebox.askyesno(title="Aviso", message="Tem certeza de que deseja apagar?", icon='warning')
         if msg:
+
+
             self.conecta_bd()
-            self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id,))
+
+            self.cursor.execute(""" DELETE FROM Entregues WHERE id_ent = ? """, (self.id_ent,))
             self.conn.commit()
+
+            self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id_pen,))
+            self.conn.commit()
+
             self.desconecta_bd()
-            self.limpa_tela()
+            self.select_lista2()
             self.select_lista()
+            self.limpa_tela()
+
 
     def select_lista(self):
+        # Mostra o Banco de Dados na Tela - Aba Pendentes
+
+        # deleta os dados que aparecem na tela para que a lista seja atualizada.
         self.listaEnc.delete(*self.listaEnc.get_children())
+
+        # Conecta ao Banco e seleciona os dados
         self.conecta_bd()
-        lista = self.cursor.execute(""" SELECT id, codigo, destinatario, data_entrada, tipo, funcionario FROM Encomendas
-                                        ORDER BY destinatario ASC; """)
+        lista = self.cursor.execute(""" SELECT id, codigo, destinatario, data_entrada, tipo, funcionario 
+                                        FROM Encomendas
+                                        ORDER BY data_entrada ASC; """)
+
+        # Pega os dados selecionados e os monstra na tela
         for i in lista:
             self.listaEnc.insert("", END, values=i)
         self.desconecta_bd()
 
     def select_lista2(self):
+        # Mostra o Banco de Dados na Tela - Aba Entregues
         self.listaEntregues.delete(*self.listaEntregues.get_children())
         self.conecta_bd()
-        lista = self.cursor.execute(""" SELECT id_ent, id_pen, codigo, destinatario, data_retirada, retirada_por FROM Entregues
+        lista = self.cursor.execute(""" SELECT id_ent, id_pen, codigo, destinatario, data_retirada, retirada_por 
+                                        FROM Entregues
                                         ORDER BY data_retirada DESC; """)
         for i in lista:
             self.listaEntregues.insert("", END, values=i)
@@ -168,14 +237,18 @@ class Funcs:
     def busca_encomenda(self):
         self.conecta_bd()
         self.listaEnc.delete(*self.listaEnc.get_children())
-        self.destinatario_entry.insert(END, '%')
+
         nome = self.destinatario_entry.get()
-        self.cursor.execute("""
-            SELECT id, codigo, destinatario, data_entrada, tipo, funcionario 
-            FROM Encomendas
-            WHERE destinatario 
-            LIKE '%s' 
-            ORDER BY destinatario ASC""" % nome)
+        codigo = self.codigo_entry.get()
+        tipo = self.tipo_entry.get()
+        funcionario = self.funcionario_entry.get()
+
+        self.cursor.execute(f"""
+                            SELECT id, codigo, destinatario, data_entrada, tipo, funcionario 
+                            FROM Encomendas
+                            WHERE codigo LIKE '%{codigo}%' AND destinatario LIKE '%{nome}%' AND tipo LIKE '%{tipo}%'
+                            AND funcionario LIKE '%{funcionario}%'
+                            ORDER BY destinatario ASC""")
 
         buscanomeEnc = self.cursor.fetchall()
 
