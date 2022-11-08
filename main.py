@@ -2,7 +2,6 @@ from modulos import *
 from frameGrad import GradientFrame
 from reports import Relatorios
 from funcionalidades import Funcs
-from entPlaceHold import EntPlaceHold
 
 root = Tk()
 
@@ -137,14 +136,14 @@ class Application(Funcs, Relatorios):
         # Label e Entrada Data
         # self.lb_retirada = Label(self.frame_1, text="Retirada Por:", bg='gray20', fg='white')
         self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
-        self.lb_retirada.place(relx=0.6, rely=0.56, relwidth=0.3, relheight=0.37)
+        self.lb_retirada.place(relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35)
 
         self.retirada_entry = Entry(self.lb_retirada)
         self.retirada_entry.place(relx=0.05, rely=0.03, relwidth=0.90)
 
         # Botão Retirada/Confirmar
         self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar', command=self.add_saida)
-        self.bt_reti.place(relx=0.06, rely=0.45, relwidth=0.45, relheight=0.45)
+        self.bt_reti.place(relx=0.06, rely=0.43, relwidth=0.37, relheight=0.53)
 
     def lista_frame2(self):
         # Abas
