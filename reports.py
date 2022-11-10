@@ -1,5 +1,4 @@
 from modulos import *
-from funcionalidades import Funcs
 
 
 class Relatorios:

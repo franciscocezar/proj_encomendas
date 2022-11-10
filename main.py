@@ -133,15 +133,20 @@ class Application(Funcs, Relatorios):
         self.funcionario_entry = ttk.Combobox(self.frame_1, values=self.lt_funcs)
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
-        # Label e Entrada Data
-        # self.lb_retirada = Label(self.frame_1, text="Retirada Por:", bg='gray20', fg='white')
+        # Label e Entry Data Entrada
+        self.lb_dataentrada = Label(self.frame_1, text="Data:", bg='gray20', fg='white')
+        self.lb_dataentrada.place(relx=0.376, rely=0.6)
+
+        self.dataentrada_entry = Entry(self.frame_1)
+        self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
+
+        # Label, Entry and Button
         self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
         self.lb_retirada.place(relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35)
 
         self.retirada_entry = Entry(self.lb_retirada)
         self.retirada_entry.place(relx=0.05, rely=0.03, relwidth=0.90)
 
-        # Botão Retirada/Confirmar
         self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar', command=self.add_saida)
         self.bt_reti.place(relx=0.06, rely=0.43, relwidth=0.37, relheight=0.53)
 
@@ -159,15 +164,12 @@ class Application(Funcs, Relatorios):
         #  *** ABA PENDENTES ***
         style = ttk.Style()
         # style.theme_use('alt')
-        style.configure("Treeview",
-                         background='gray20',
-                         foreground='white',
-                         rowheight=25,
-                         fielbackground='gray20')
+        style.configure("Treeview", background='gray20', foreground='white', rowheight=25, fielbackground='gray20')
 
         style.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
 
-        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"), selectmode='extended')
+        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"),
+                                     selectmode='extended')
         self.listaEnc.heading("#0", text="", )
         self.listaEnc.heading("#1", text="ID")
         self.listaEnc.heading("#2", text="Código")
@@ -201,7 +203,8 @@ class Application(Funcs, Relatorios):
         self.abas.add(self.aba2, text="Entregues")
 
         self.listaEntregues = ttk.Treeview(self.aba2, height=3,
-                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"), selectmode='extended')
+                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"),
+                                           selectmode='extended')
         self.listaEntregues.heading("#0", text="",)
         self.listaEntregues.heading("#1", text="ID")
         self.listaEntregues.heading("#2", text="ID-Pen")

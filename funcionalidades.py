@@ -10,6 +10,7 @@ class Funcs:
         self.tipo_entry.delete(0, END)
         self.funcionario_entry.delete(0, END)
         self.retirada_entry.delete(0, END)
+        self.dataentrada_entry.delete(0, END)
 
     def conecta_bd(self):
         self.conn = sqlite3.connect("bancodados_encomendas.db")
@@ -59,9 +60,7 @@ class Funcs:
         print("Bando de dados criado")
         self.desconecta_bd()
 
-    def data_hora(self):
-        dh = datetime.now()
-        return dh.strftime("%d/%m/%Y %H:%M")
+
 
     def variaveis(self):
         self.id_pen = self.id_entry.get()
@@ -69,11 +68,12 @@ class Funcs:
         self.destinatario = self.destinatario_entry.get().title()
         self.tipo = self.tipo_entry.get().title()
         self.funcionario = self.funcionario_entry.get().title()
-        self.dataentrada = self.data_hora()
+        self.dataen = self.dataentrada_entry.get()
+
+
 
         self.id_ent = self.id_ent_entry.get()
         self.retirada_por = self.retirada_entry.get().title()
-        self.data_retirada = self.data_hora()
 
     def OnDoubleClick(self, event):
         # Função Duplo Clique na lista mostrada na tela.
@@ -89,7 +89,7 @@ class Funcs:
             self.id_entry.insert(END, col1)
             self.codigo_entry.insert(END, col2)
             self.destinatario_entry.insert(END, col3)
-            # self.dataentrada_entry.insert(END, col4)
+            self.dataentrada_entry.insert(END, ''.join(col4.split('/')))
             self.tipo_entry.insert(END, col5)
             self.funcionario_entry.insert(END, col6)
 
@@ -107,6 +107,7 @@ class Funcs:
 
     def add_encomenda(self):
         self.variaveis()
+        self.dataentrada = f'{self.dataen[:2]}/{self.dataen[2:4]}/{self.dataen[4:]}'
         dicionario = {'cod': "Digite o Código", 'cod2': "", 'dest': "Digite o nome do Destinatário(a)", 'dest2': ""}
 
         if self.codigo_entry.get() in dicionario.values() or self.destinatario_entry.get() in dicionario.values():
@@ -126,38 +127,44 @@ class Funcs:
 
     def add_saida(self):
         self.variaveis()
+        self.dataentrada = f'{self.dataen[:2]}/{self.dataen[2:4]}/{self.dataen[4:]}'
+
+        # self.data_retirada = data_hora()
+        # datare = [self.data_retirada]
+        data_re_tu = datetime.now().strftime("%d/%m/%Y %H:%M")
 
         if not self.retirada_entry.get():
             msg = "Informe a pessoa que retirou a encomenda."
             messagebox.showinfo(title="AVISO", message=msg)
         else:
+            msg = messagebox.askyesno(title="Aviso", message="Os dados estão corretos?", icon='warning')
+            if msg:
+                self.conecta_bd()
 
-            self.conecta_bd()
+                self.cursor.execute(""" INSERT INTO Entregues (id_pen, codigo, destinatario, data_retirada, retirada_por) 
+                                        VALUES (?, ?, ?, ?, ?)""",
+                                    (self.id_pen, self.codigo, self.destinatario, data_re_tu, self.retirada_por))
+                self.conn.commit()
+                self.desconecta_bd()
+                self.select_lista2()
+                self.limpa_tela()
 
-            self.cursor.execute(""" INSERT INTO Entregues (id_pen, codigo, destinatario, data_retirada, retirada_por) 
-                                    VALUES (?, ?, ?, ?, ?)""",
-                                (self.id_pen, self.codigo, self.destinatario, self.data_retirada, self.retirada_por))
-            self.conn.commit()
-            self.desconecta_bd()
-            self.select_lista2()
-            self.limpa_tela()
+                self.conecta_bd()
+                self.cursor.execute(""" INSERT INTO quarentena_bd (id_pen, id_ent, codigo, destinatario, 
+                                                                   data_entrada, tipo, funcionario, 
+                                                                   data_retirada, retirada_por) 
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                                    (self.id_pen, self.id_ent_entry.get(), self.codigo, self.destinatario,
+                                     self.dataentrada, self.tipo, self.funcionario, data_re_tu, self.retirada_por))
+                self.conn.commit()
+                self.desconecta_bd()
 
-            self.conecta_bd()
-            self.cursor.execute(""" INSERT INTO quarentena_bd (id_pen, id_ent, codigo, destinatario, 
-                                                               data_entrada, tipo, funcionario, 
-                                                               data_retirada, retirada_por) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                                (self.id_pen, self.id_ent, self.codigo, self.destinatario,
-                                 self.dataentrada, self.tipo, self.funcionario, self.data_retirada, self.retirada_por))
-            self.conn.commit()
-            self.desconecta_bd()
-
-            self.conecta_bd()
-            self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id_pen,))
-            self.conn.commit()
-            self.desconecta_bd()
-            self.limpa_tela()
-            self.select_lista()
+                self.conecta_bd()
+                self.cursor.execute(""" DELETE FROM Encomendas WHERE id = ? """, (self.id_pen,))
+                self.conn.commit()
+                self.desconecta_bd()
+                self.limpa_tela()
+                self.select_lista()
 
     def altera_dados(self):
         self.variaveis()
@@ -173,18 +180,18 @@ class Funcs:
         self.select_lista()
         self.limpa_tela()
 
-    def alterar_saida(self):
-        self.variaveis()
-
-        self.conecta_bd()
-        self.cursor.execute(""" 
-                                   UPDATE Entregues 
-                                   SET retirada_por = ?
-                                   WHERE id_ent = ? """, (self.retirada_por, self.id_ent))
-        self.conn.commit()
-        self.desconecta_bd()
-        self.select_lista2()
-        self.limpa_tela()
+    # def alterar_saida(self):
+    #     self.variaveis()
+    #
+    #     self.conecta_bd()
+    #     self.cursor.execute("""
+    #                                UPDATE Entregues
+    #                                SET retirada_por = ?
+    #                                WHERE id_ent = ? """, (self.retirada_por, self.id_ent))
+    #     self.conn.commit()
+    #     self.desconecta_bd()
+    #     self.select_lista2()
+    #     self.limpa_tela()
 
     def deleta_encomenda(self):
         self.variaveis()
