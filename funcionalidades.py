@@ -35,7 +35,7 @@ class Funcs:
             data_entrada DATE,
             tipo CHAR(20),
             funcionario CHAR(40),
-            data_retirada DATE,
+            data_retirada TEXT,
             retirada_por CHAR(40)
         );""")
         self.conn.commit()
@@ -60,20 +60,18 @@ class Funcs:
         print("Bando de dados criado")
         self.desconecta_bd()
 
-
-
     def variaveis(self):
         self.id_pen = self.id_entry.get()
         self.codigo = self.codigo_entry.get().upper()
         self.destinatario = self.destinatario_entry.get().title()
         self.tipo = self.tipo_entry.get().title()
         self.funcionario = self.funcionario_entry.get().title()
-        self.dataen = self.dataentrada_entry.get()
-
-
+        dataen = self.dataentrada_entry.get()
+        self.dataentrada = f'{dataen[:2]}/{dataen[2:4]}/{dataen[4:]}'
 
         self.id_ent = self.id_ent_entry.get()
         self.retirada_por = self.retirada_entry.get().title()
+        self.data_retirada = datetime.now().strftime("%d/%m/%Y %H:%M")
 
     def OnDoubleClick(self, event):
         # Função Duplo Clique na lista mostrada na tela.
@@ -107,19 +105,21 @@ class Funcs:
 
     def add_encomenda(self):
         self.variaveis()
-        self.dataentrada = f'{self.dataen[:2]}/{self.dataen[2:4]}/{self.dataen[4:]}'
-        dicionario = {'cod': "Digite o Código", 'cod2': "", 'dest': "Digite o nome do Destinatário(a)", 'dest2': ""}
 
-        if self.codigo_entry.get() in dicionario.values() or self.destinatario_entry.get() in dicionario.values():
+        if self.codigo_entry.get() == "" or self.destinatario_entry.get() == "":
             msg = "Os campos 'Código' e 'Destinatário(a)' são obrigatórios."
             messagebox.showinfo(title="AVISO", message=msg)
+        elif len(self.dataentrada_entry.get()) <= 5:
+            msg2 = """Formato de Data incorreto.
+            Ex.: '010120' or '01012022'"""
+            messagebox.showinfo(title="AVISO", message=msg2)
         else:
 
             self.conecta_bd()
 
             self.cursor.execute(""" INSERT INTO Encomendas (codigo, destinatario, data_entrada, tipo, funcionario) 
                                     VALUES (?, ?, ?, ?, ?)""",
-                                (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
+                                    (self.codigo, self.destinatario, self.dataentrada, self.tipo, self.funcionario))
             self.conn.commit()
             self.desconecta_bd()
             self.select_lista()
@@ -127,11 +127,6 @@ class Funcs:
 
     def add_saida(self):
         self.variaveis()
-        self.dataentrada = f'{self.dataen[:2]}/{self.dataen[2:4]}/{self.dataen[4:]}'
-
-        # self.data_retirada = data_hora()
-        # datare = [self.data_retirada]
-        data_re_tu = datetime.now().strftime("%d/%m/%Y %H:%M")
 
         if not self.retirada_entry.get():
             msg = "Informe a pessoa que retirou a encomenda."
@@ -143,7 +138,8 @@ class Funcs:
 
                 self.cursor.execute(""" INSERT INTO Entregues (id_pen, codigo, destinatario, data_retirada, retirada_por) 
                                         VALUES (?, ?, ?, ?, ?)""",
-                                    (self.id_pen, self.codigo, self.destinatario, data_re_tu, self.retirada_por))
+                                    (
+                                    self.id_pen, self.codigo, self.destinatario, self.data_retirada, self.retirada_por))
                 self.conn.commit()
                 self.desconecta_bd()
                 self.select_lista2()
@@ -155,7 +151,8 @@ class Funcs:
                                                                    data_retirada, retirada_por) 
                                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                                     (self.id_pen, self.id_ent_entry.get(), self.codigo, self.destinatario,
-                                     self.dataentrada, self.tipo, self.funcionario, data_re_tu, self.retirada_por))
+                                     self.dataentrada, self.tipo, self.funcionario, self.data_retirada,
+                                     self.retirada_por))
                 self.conn.commit()
                 self.desconecta_bd()
 
@@ -179,19 +176,6 @@ class Funcs:
         self.desconecta_bd()
         self.select_lista()
         self.limpa_tela()
-
-    # def alterar_saida(self):
-    #     self.variaveis()
-    #
-    #     self.conecta_bd()
-    #     self.cursor.execute("""
-    #                                UPDATE Entregues
-    #                                SET retirada_por = ?
-    #                                WHERE id_ent = ? """, (self.retirada_por, self.id_ent))
-    #     self.conn.commit()
-    #     self.desconecta_bd()
-    #     self.select_lista2()
-    #     self.limpa_tela()
 
     def deleta_encomenda(self):
         self.variaveis()
@@ -258,12 +242,13 @@ class Funcs:
         codigo = self.codigo_entry.get()
         tipo = self.tipo_entry.get()
         funcionario = self.funcionario_entry.get()
+        data = ''.join(self.dataentrada_entry.get().split('/'))
 
         self.cursor.execute(f"""
                             SELECT id, codigo, destinatario, data_entrada, tipo, funcionario 
                             FROM Encomendas
                             WHERE codigo LIKE '%{codigo}%' AND destinatario LIKE '%{nome}%' AND tipo LIKE '%{tipo}%'
-                            AND funcionario LIKE '%{funcionario}%'
+                            AND funcionario LIKE '%{funcionario}%' AND data_entrada LIKE '%{data}%'
                             ORDER BY destinatario ASC""")
 
         buscanomeEnc = self.cursor.fetchall()
@@ -273,3 +258,4 @@ class Funcs:
 
         self.limpa_tela()
         self.desconecta_bd()
+

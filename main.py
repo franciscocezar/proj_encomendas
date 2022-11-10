@@ -2,14 +2,16 @@ from modulos import *
 from frameGrad import GradientFrame
 from reports import Relatorios
 from funcionalidades import Funcs
+from entriesValidators import Validators
 
 root = Tk()
 
 
-class Application(Funcs, Relatorios):
+class Application(Funcs, Relatorios, Validators):
 
     def __init__(self):
         self.root = root
+        self.validateEntries()
         self.tela()
         self.frames_da_tela()
         self.widgets_frame1()
@@ -137,8 +139,10 @@ class Application(Funcs, Relatorios):
         self.lb_dataentrada = Label(self.frame_1, text="Data:", bg='gray20', fg='white')
         self.lb_dataentrada.place(relx=0.376, rely=0.6)
 
-        self.dataentrada_entry = Entry(self.frame_1)
+        self.dataentrada_entry = Entry(self.frame_1, validate='key', validatecommand=self.valid)
         self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
+        atk.tooltip(self.dataentrada_entry, "'010120' or '01012022'")
+
 
         # Label, Entry and Button
         self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
@@ -248,5 +252,7 @@ class Application(Funcs, Relatorios):
 
         filemenu2.add_command(label="Dados Encomenda", command=self.geraRelatEncomenda)
 
+    def validateEntries(self):
+        self.valid = (self.root.register(self.dateValidator), "%P")
 
 Application()
