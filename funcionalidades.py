@@ -222,7 +222,7 @@ class Funcs:
         self.listaEntregues.delete(*self.listaEntregues.get_children())
         self.conecta_bd()
         lista = self.cursor.execute(""" SELECT id_ent, id_pen, codigo, destinatario, data_retirada, retirada_por 
-                                        FROM Entregues
+                                        FROM quarentena_bd
                                         ORDER BY data_retirada DESC; """)
         count = 0
         for i in lista:

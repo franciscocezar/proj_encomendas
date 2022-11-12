@@ -15,3 +15,5 @@ import webbrowser
 from datetime import datetime
 
 import awesometkinter as atk
+
+import pandas as pd

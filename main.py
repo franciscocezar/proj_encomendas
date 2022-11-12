@@ -143,7 +143,6 @@ class Application(Funcs, Relatorios, Validators):
         self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
         atk.tooltip(self.dataentrada_entry, "'010120' or '01012022'")
 
-
         # Label, Entry and Button
         self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
         self.lb_retirada.place(relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35)
@@ -209,7 +208,7 @@ class Application(Funcs, Relatorios, Validators):
         self.listaEntregues = ttk.Treeview(self.aba2, height=3,
                                            columns=("col1", "col2", "col3", "col4", "col5", "col6"),
                                            selectmode='extended')
-        self.listaEntregues.heading("#0", text="",)
+        self.listaEntregues.heading("#0", text="", )
         self.listaEntregues.heading("#1", text="ID")
         self.listaEntregues.heading("#2", text="ID-Pen")
         self.listaEntregues.heading("#3", text="Código")
@@ -254,5 +253,6 @@ class Application(Funcs, Relatorios, Validators):
 
     def validateEntries(self):
         self.valid = (self.root.register(self.dateValidator), "%P")
+
 
 Application()
