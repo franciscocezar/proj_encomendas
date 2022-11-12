@@ -13,7 +13,8 @@ class Funcs:
         self.dataentrada_entry.delete(0, END)
 
     def conecta_bd(self):
-        self.conn = sqlite3.connect("bancodados_encomendas.db")
+        self.conn = sqlite3.connect("/Users/franciscojunior/Downloads/encomendas_proj_exe/registro_encomendas"
+                                    "/bancodados_encomendas.db")
         self.cursor = self.conn.cursor()
         print("Conectando ao banco de dados")
 

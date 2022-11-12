@@ -1,4 +1,4 @@
-from modulos import *
+from registro_encomendas.modulos import *
 
 
 class GradientFrame(Canvas):

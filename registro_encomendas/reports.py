@@ -4,14 +4,15 @@ from modulos import *
 class Relatorios:
 
     def printEncomenda(self):
-        webbrowser.open("encomenda.pdf")
+        webbrowser.open("../encomenda.pdf")
 
     def geraRelatEncomenda(self):
         self.conecta_bd()
 
         self.variaveis()
 
-        self.c = canvas.Canvas("encomenda.pdf", pagesize=A4)
+        self.c = canvas.Canvas("/Users/franciscojunior/Downloads/encomendas_proj_exe/registro_encomendas/encomenda.pdf",
+                               pagesize=A4)
         codigo = self.codigo_entry.get()
         tabela = pd.read_sql(f"""SELECT codigo, destinatario, data_entrada, tipo, 
                                         funcionario, data_retirada,  retirada_por
