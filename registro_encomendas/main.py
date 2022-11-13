@@ -1,14 +1,13 @@
-from modulos import *
-from frameGrad import GradientFrame
-from reports import Relatorios
-from funcionalidades import Funcs
 from entriesValidators import Validators
+from frameGrad import GradientFrame
+from funcionalidades import Funcs
+from modulos import *
+from reports import Relatorios
 
 root = Tk()
 
 
 class Application(Funcs, Relatorios, Validators):
-
     def __init__(self):
         self.root = root
         self.validateEntries()
@@ -22,43 +21,28 @@ class Application(Funcs, Relatorios, Validators):
         self.Menus()
         root.mainloop()
 
-    def center(self, win):
-        # :param win: the main window or Toplevel window to center
+    def center(self):
+        APP_WIDTH = 350
+        APP_HEIGHT = 320
 
-        # Apparently a common hack to get the window size. Temporarily hide the
-        # window to avoid update_idletasks() drawing the window in the wrong
-        # position.
-        win.update_idletasks()  # Update "requested size" from geometry manager
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
 
-        # define window dimensions width and height
-        width = win.winfo_width()
-        frm_width = win.winfo_rootx() - win.winfo_x()
-        win_width = width + 2 * frm_width
+        app_center_coordinate_x = (screen_width / 3.5) - (APP_WIDTH / 3.5)
+        app_center_coordinate_y = (screen_height / 4) - (APP_HEIGHT / 4)
 
-        height = win.winfo_height()
-        titlebar_height = win.winfo_rooty() - win.winfo_y()
-        win_height = height + titlebar_height + frm_width
-
-        # Get the window position from the top dynamically as well as position from left or right as follows
-        x = win.winfo_screenwidth() // 2 - win_width // 2
-        y = win.winfo_screenheight() // 2 - win_height // 2
-
-        # this is the line that will center your window
-        win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-
-        # This seems to draw the window frame immediately, so only call deiconify()
-        # after setting correct window position
-        win.deiconify()
+        # Position App to the Centre of the Screen
+        self.root.geometry(f"{APP_WIDTH}x{APP_HEIGHT}+{int(app_center_coordinate_x)}+{int(app_center_coordinate_y)}")
 
     def tela(self):
-        self.root.title("Registro de Encomendas")
+        self.root.title('Registro de Encomendas')
         self.root.configure(bg='gray20')
-        self.root.geometry("700x500")
+        self.root.geometry('700x500')
         self.root.resizable(True, True)
         # self.root.maxsize(width=900, height=700)
         self.root.attributes('-alpha', 0.0)
         self.root.minsize(800, 600)
-        self.center(self.root)
+        self.center()
         self.root.attributes('-alpha', 1.0)
 
     def frames_da_tela(self):
@@ -70,31 +54,43 @@ class Application(Funcs, Relatorios, Validators):
 
     def widgets_frame1(self):
         # Botão Limpar
-        self.bt_limpar = atk.Button3d(self.frame_1, text="Limpar", command=self.limpa_tela)
+        self.bt_limpar = atk.Button3d(
+            self.frame_1, text='Limpar', command=self.limpa_tela
+        )
         self.bt_limpar.place(relx=0.3, rely=0.1, relwidth=0.1, relheight=0.15)
-        atk.tooltip(self.bt_limpar, "Limpar Campos")
+        atk.tooltip(self.bt_limpar, 'Limpar Campos')
 
         # Botão Buscar
-        self.bt_buscar = atk.Button3d(self.frame_1, text="Buscar", command=self.busca_encomenda)
+        self.bt_buscar = atk.Button3d(
+            self.frame_1, text='Buscar', command=self.busca_encomenda
+        )
         self.bt_buscar.place(relx=0.41, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_buscar, 'Buscar por Nome')
 
         # Botão Novo
-        self.bt_novo = atk.Button3d(self.frame_1, text="Novo", command=self.add_encomenda)
+        self.bt_novo = atk.Button3d(
+            self.frame_1, text='Novo', command=self.add_encomenda
+        )
         self.bt_novo.place(relx=0.63, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_novo, 'Registar Nova Encomenda')
 
         # Botão alterar
-        self.bt_alterar = atk.Button3d(self.frame_1, text="Alterar", command=self.altera_dados)
-        self.bt_alterar.place(relx=0.74, rely=0.1, relwidth=0.1, relheight=0.15)
+        self.bt_alterar = atk.Button3d(
+            self.frame_1, text='Alterar', command=self.altera_dados
+        )
+        self.bt_alterar.place(
+            relx=0.74, rely=0.1, relwidth=0.1, relheight=0.15
+        )
         atk.tooltip(self.bt_alterar, 'Alterar Dados')
 
         # Criação do botao apagar
-        self.bt_apagar = atk.Button3d(self.frame_1, text="Apagar", command=self.deleta_encomenda)
+        self.bt_apagar = atk.Button3d(
+            self.frame_1, text='Apagar', command=self.deleta_encomenda
+        )
         self.bt_apagar.place(relx=0.85, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_apagar, 'Exclui Registro')
 
-        '''Entrada de Dados'''
+        """Entrada de Dados"""
         # Entrada IDs
         self.id_entry = Entry(self.frame_1)
         self.id_ent_entry = Entry(self.frame_1)
@@ -106,7 +102,9 @@ class Application(Funcs, Relatorios, Validators):
         # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
 
         # Label e Entrada Codigo
-        self.lb_codigo = Label(self.frame_1, text="Código", bg='gray20', fg='white')
+        self.lb_codigo = Label(
+            self.frame_1, text='Código', bg='gray20', fg='white'
+        )
         self.lb_codigo.place(relx=0.05, rely=0.05)
 
         self.codigo_entry = Entry(self.frame_1)
@@ -114,43 +112,59 @@ class Application(Funcs, Relatorios, Validators):
 
         # Label e Entrada Destinatário
 
-        self.lb_destinatario = Label(self.frame_1, text="Destinatário(a)", bg='gray20', fg='white')
+        self.lb_destinatario = Label(
+            self.frame_1, text='Destinatário(a)', bg='gray20', fg='white'
+        )
         self.lb_destinatario.place(relx=0.05, rely=0.35)
 
         self.destinatario_entry = Entry(self.frame_1)
         self.destinatario_entry.place(relx=0.05, rely=0.45, relwidth=0.5)
 
         # Label e Entrada Tipo de Encomenda
-        self.lb_tipo = Label(self.frame_1, text="Tipo", bg='gray20', fg='white')
+        self.lb_tipo = Label(
+            self.frame_1, text='Tipo', bg='gray20', fg='white'
+        )
         self.lb_tipo.place(relx=0.6, rely=0.35)
 
         self.tipo_entry = Entry(self.frame_1)
         self.tipo_entry.place(relx=0.5970, rely=0.45, relwidth=0.306)
 
         # Label e Entrada Funcionário
-        self.lb_funcionario = Label(self.frame_1, text="Funcionário(a)", bg='gray20', fg='white')
+        self.lb_funcionario = Label(
+            self.frame_1, text='Funcionário(a)', bg='gray20', fg='white'
+        )
         self.lb_funcionario.place(relx=0.05, rely=0.6)
 
         self.lt_funcs = ['Francisco Junior', 'Jonas Santos', 'Rosana Silva']
-        self.funcionario_entry = ttk.Combobox(self.frame_1, values=self.lt_funcs)
+        self.funcionario_entry = ttk.Combobox(
+            self.frame_1, values=self.lt_funcs
+        )
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
         # Label e Entry Data Entrada
-        self.lb_dataentrada = Label(self.frame_1, text="Data:", bg='gray20', fg='white')
+        self.lb_dataentrada = Label(
+            self.frame_1, text='Data:', bg='gray20', fg='white'
+        )
         self.lb_dataentrada.place(relx=0.376, rely=0.6)
 
-        self.dataentrada_entry = Entry(self.frame_1, validate='key', validatecommand=self.valid)
+        self.dataentrada_entry = Entry(
+            self.frame_1, validate='key', validatecommand=self.valid
+        )
         self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
-        atk.tooltip(self.dataentrada_entry, "'010120' or '01012022'")
+        atk.tooltip(self.dataentrada_entry, "'010122' ou '01012022'")
 
         # Label, Entry and Button
-        self.lb_retirada = LabelFrame(self.frame_1, text="Retirado por")
-        self.lb_retirada.place(relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35)
+        self.lb_retirada = LabelFrame(self.frame_1, text='Retirado por')
+        self.lb_retirada.place(
+            relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35
+        )
 
         self.retirada_entry = Entry(self.lb_retirada)
         self.retirada_entry.place(relx=0.05, rely=0.03, relwidth=0.90)
 
-        self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar', command=self.add_saida)
+        self.bt_reti = atk.Button3d(
+            self.lb_retirada, text='Confirmar', command=self.add_saida
+        )
         self.bt_reti.place(relx=0.06, rely=0.43, relwidth=0.37, relheight=0.53)
 
     def lista_frame2(self):
@@ -162,32 +176,49 @@ class Application(Funcs, Relatorios, Validators):
 
         # self.aba1.configure(background='#e6e6fa')
 
-        self.abas.add(self.aba1, text="Pendentes")
+        self.abas.add(self.aba1, text='Pendentes')
 
         #  *** ABA PENDENTES ***
         style = ttk.Style()
         # style.theme_use('alt')
-        style.configure("Treeview", background='gray20', foreground='white', rowheight=25, fielbackground='gray20')
+        style.configure(
+            'Treeview',
+            background='gray20',
+            foreground='white',
+            rowheight=25,
+            fielbackground='gray20',
+        )
 
-        style.map("Treeview", background=[('selected', 'white')], foreground=[('selected', 'black')])
+        style.map(
+            'Treeview',
+            background=[('selected', 'white')],
+            foreground=[('selected', 'black')],
+        )
 
-        self.listaEnc = ttk.Treeview(self.aba1, height=3, columns=("col1", "col2", "col3", "col4", "col5", "col6"),
-                                     selectmode='extended')
-        self.listaEnc.heading("#0", text="", )
-        self.listaEnc.heading("#1", text="ID")
-        self.listaEnc.heading("#2", text="Código")
-        self.listaEnc.heading("#3", text="Destinatário(a)")
-        self.listaEnc.heading("#4", text="Data Entrada")
-        self.listaEnc.heading("#5", text="Tipo")
-        self.listaEnc.heading("#6", text="Funcionário(a)")
+        self.listaEnc = ttk.Treeview(
+            self.aba1,
+            height=3,
+            columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'),
+            selectmode='extended',
+        )
+        self.listaEnc.heading(
+            '#0',
+            text='',
+        )
+        self.listaEnc.heading('#1', text='ID')
+        self.listaEnc.heading('#2', text='Código')
+        self.listaEnc.heading('#3', text='Destinatário(a)')
+        self.listaEnc.heading('#4', text='Data Entrada')
+        self.listaEnc.heading('#5', text='Tipo')
+        self.listaEnc.heading('#6', text='Funcionário(a)')
 
-        self.listaEnc.column("#0", width=0, stretch=NO)
-        self.listaEnc.column("#1", width=1, anchor="center")
-        self.listaEnc.column("#2", width=90, anchor="center")
-        self.listaEnc.column("#3", width=110, anchor="center")
-        self.listaEnc.column("#4", width=80, anchor="center")
-        self.listaEnc.column("#5", width=70, anchor="center")
-        self.listaEnc.column("#6", width=70, anchor="center")
+        self.listaEnc.column('#0', width=0, stretch=NO)
+        self.listaEnc.column('#1', width=1, anchor='center')
+        self.listaEnc.column('#2', width=90, anchor='center')
+        self.listaEnc.column('#3', width=110, anchor='center')
+        self.listaEnc.column('#4', width=80, anchor='center')
+        self.listaEnc.column('#5', width=70, anchor='center')
+        self.listaEnc.column('#6', width=70, anchor='center')
 
         # Cor da linha sem estar selecionada
         self.listaEnc.tag_configure('oddrow', background='gray20')
@@ -197,43 +228,55 @@ class Application(Funcs, Relatorios, Validators):
 
         self.scrollLista = Scrollbar(self.aba1, orient='vertical')
         self.listaEnc.configure(yscrollcommand=self.scrollLista.set)
-        self.scrollLista.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
-        self.listaEnc.bind("<Double-1>", self.OnDoubleClick)
+        self.scrollLista.place(
+            relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97
+        )
+        self.listaEnc.bind('<Double-1>', self.OnDoubleClick)
 
         # *** ABA ENTREGUES ***
 
         self.aba2 = GradientFrame(self.abas)
-        self.abas.add(self.aba2, text="Entregues")
+        self.abas.add(self.aba2, text='Entregues')
 
-        self.listaEntregues = ttk.Treeview(self.aba2, height=3,
-                                           columns=("col1", "col2", "col3", "col4", "col5", "col6"),
-                                           selectmode='extended')
-        self.listaEntregues.heading("#0", text="", )
-        self.listaEntregues.heading("#1", text="ID")
-        self.listaEntregues.heading("#2", text="ID-Pen")
-        self.listaEntregues.heading("#3", text="Código")
-        self.listaEntregues.heading("#4", text="Destinatário(a)")
-        self.listaEntregues.heading("#5", text="Data Retirada")
-        self.listaEntregues.heading("#6", text="Retirada por")
+        self.listaEntregues = ttk.Treeview(
+            self.aba2,
+            height=3,
+            columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'),
+            selectmode='extended',
+        )
+        self.listaEntregues.heading(
+            '#0',
+            text='',
+        )
+        self.listaEntregues.heading('#1', text='ID')
+        self.listaEntregues.heading('#2', text='ID-Pen')
+        self.listaEntregues.heading('#3', text='Código')
+        self.listaEntregues.heading('#4', text='Destinatário(a)')
+        self.listaEntregues.heading('#5', text='Data Retirada')
+        self.listaEntregues.heading('#6', text='Retirada por')
 
-        self.listaEntregues.column("#0", width=0, stretch=NO)
-        self.listaEntregues.column("#1", width=1, anchor="center")
-        self.listaEntregues.column("#2", width=1, anchor="center")
-        self.listaEntregues.column("#3", width=90, anchor="center")
-        self.listaEntregues.column("#4", width=80, anchor="center")
-        self.listaEntregues.column("#5", width=70, anchor="center")
-        self.listaEntregues.column("#6", width=70, anchor="center")
+        self.listaEntregues.column('#0', width=0, stretch=NO)
+        self.listaEntregues.column('#1', width=1, anchor='center')
+        self.listaEntregues.column('#2', width=1, anchor='center')
+        self.listaEntregues.column('#3', width=90, anchor='center')
+        self.listaEntregues.column('#4', width=80, anchor='center')
+        self.listaEntregues.column('#5', width=70, anchor='center')
+        self.listaEntregues.column('#6', width=70, anchor='center')
 
         # Cor da linha sem estar selecionada
         self.listaEntregues.tag_configure('oddrow', background='gray20')
         self.listaEntregues.tag_configure('evenrow', background='gray10')
 
-        self.listaEntregues.place(relx=0, rely=0.01, relwidth=0.97, relheight=0.97)
+        self.listaEntregues.place(
+            relx=0, rely=0.01, relwidth=0.97, relheight=0.97
+        )
 
         self.scrollLista2 = Scrollbar(self.aba2, orient='vertical')
         self.listaEntregues.configure(yscrollcommand=self.scrollLista2.set)
-        self.scrollLista2.place(relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97)
-        self.listaEntregues.bind("<Double-1>", self.SecondDoubleClick)
+        self.scrollLista2.place(
+            relx=0.97, rely=0.01, relwidth=0.025, relheight=0.97
+        )
+        self.listaEntregues.bind('<Double-1>', self.SecondDoubleClick)
 
     def Menus(self):
         menubar = Menu(self.root)
@@ -241,18 +284,21 @@ class Application(Funcs, Relatorios, Validators):
         filemenu = Menu(menubar)
         filemenu2 = Menu(menubar)
 
-        def Quit(): self.root.destroy()
+        def Quit():
+            self.root.destroy()
 
-        menubar.add_cascade(label="Opções", menu=filemenu)
-        menubar.add_cascade(label="Relatórios", menu=filemenu2)
+        menubar.add_cascade(label='Opções', menu=filemenu)
+        menubar.add_cascade(label='Relatórios', menu=filemenu2)
 
-        filemenu.add_command(label="Sair", command=Quit)
-        filemenu.add_command(label="Limpar", command=self.limpa_tela)
+        filemenu.add_command(label='Sair', command=Quit)
+        filemenu.add_command(label='Limpar', command=self.limpa_tela)
 
-        filemenu2.add_command(label="Dados Encomenda", command=self.geraRelatEncomenda)
+        filemenu2.add_command(
+            label='Dados Encomenda', command=self.geraRelatEncomenda
+        )
 
     def validateEntries(self):
-        self.valid = (self.root.register(self.dateValidator), "%P")
+        self.valid = (self.root.register(self.dateValidator), '%P')
 
 
 Application()
