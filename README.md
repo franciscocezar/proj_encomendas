@@ -29,9 +29,9 @@ As bibliotecas Tkinter, SQLite3, Datetime não precisam ser instaladas.
 #### Praticar:
    `Python`
    
-   `Manipula tabelas com Pandas`
+   `manipulação de tabelas com Pandas`
 
-   `CRUD (create, read, update, delete a database)`
+   `CRUD`
    
    `POO (programação orientada a objetos)`
   
