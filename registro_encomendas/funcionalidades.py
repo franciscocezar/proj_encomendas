@@ -13,8 +13,7 @@ class Funcs:
 
     def conecta_bd(self):
         self.conn = sqlite3.connect(
-            '/Users/franciscojunior/Downloads/encomendas_proj_exe/registro_encomendas'
-            '/bancodados_encomendas.db'
+            'registro_encomendas/bancodados_encomendas.db'
         )
         self.cursor = self.conn.cursor()
         print('Conectando ao banco de dados')
@@ -302,7 +301,7 @@ class Funcs:
         self.conecta_bd()
         lista = self.cursor.execute(
             """ SELECT id_ent, id_pen, codigo, destinatario, data_retirada, retirada_por 
-                                        FROM quarentena_bd
+                                        FROM Entregues
                                         ORDER BY data_retirada DESC; """
         )
         count = 0
