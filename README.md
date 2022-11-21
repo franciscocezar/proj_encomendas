@@ -1,3 +1,4 @@
+[![GitHub](https://img.shields.io/github/license/franciscocezar/proj_encomendas?style=plastic)](https://github.com/franciscocezar/proj_encomendas/blob/main/LICENSE)
 # Registro de Encomendas
 
 ### Sistema para controle de entrada e saída de encomendas. As informações ficam salvas em um banco de dados para consulta e um relatório pode ser gerado com todos os dados.   
