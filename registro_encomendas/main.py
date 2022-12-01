@@ -198,27 +198,24 @@ class Application(Funcs, Relatorios, Validators):
         self.listaEnc = ttk.Treeview(
             self.aba1,
             height=3,
-            columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'),
+            columns=('col1', 'col2', 'col3', 'col4', 'col5'),
             selectmode='extended',
         )
-        self.listaEnc.heading(
-            '#0',
-            text='',
-        )
-        self.listaEnc.heading('#1', text='ID')
-        self.listaEnc.heading('#2', text='Código')
-        self.listaEnc.heading('#3', text='Destinatário(a)')
-        self.listaEnc.heading('#4', text='Data Entrada')
-        self.listaEnc.heading('#5', text='Tipo')
-        self.listaEnc.heading('#6', text='Funcionário(a)')
+        self.listaEnc.heading('#0', text='',)
+        # self.listaEnc.heading('#1', text='ID')
+        self.listaEnc.heading('#1', text='Código')
+        self.listaEnc.heading('#2', text='Destinatário(a)')
+        self.listaEnc.heading('#3', text='Data Entrada')
+        self.listaEnc.heading('#4', text='Tipo')
+        self.listaEnc.heading('#5', text='Funcionário(a)')
 
         self.listaEnc.column('#0', width=0, stretch=NO)
-        self.listaEnc.column('#1', width=1, anchor='center')
-        self.listaEnc.column('#2', width=90, anchor='center')
-        self.listaEnc.column('#3', width=110, anchor='center')
-        self.listaEnc.column('#4', width=80, anchor='center')
+        self.listaEnc.column('#1', width=90, anchor='center')
+        self.listaEnc.column('#2', width=110, anchor='center')
+        self.listaEnc.column('#3', width=80, anchor='center')
+        self.listaEnc.column('#4', width=70, anchor='center')
         self.listaEnc.column('#5', width=70, anchor='center')
-        self.listaEnc.column('#6', width=70, anchor='center')
+        # self.listaEnc.column('#6', width=70, anchor='center')
 
         # Cor da linha sem estar selecionada
         self.listaEnc.tag_configure('oddrow', background='gray20')
@@ -241,27 +238,27 @@ class Application(Funcs, Relatorios, Validators):
         self.listaEntregues = ttk.Treeview(
             self.aba2,
             height=3,
-            columns=('col1', 'col2', 'col3', 'col4', 'col5', 'col6'),
+            columns=('col1', 'col2', 'col3'),
             selectmode='extended',
         )
         self.listaEntregues.heading(
             '#0',
             text='',
         )
-        self.listaEntregues.heading('#1', text='ID')
-        self.listaEntregues.heading('#2', text='ID-Pen')
-        self.listaEntregues.heading('#3', text='Código')
-        self.listaEntregues.heading('#4', text='Destinatário(a)')
-        self.listaEntregues.heading('#5', text='Data Retirada')
-        self.listaEntregues.heading('#6', text='Retirada por')
+        # self.listaEntregues.heading('#1', text='ID')
+        # self.listaEntregues.heading('#2', text='ID-Pen')
+        # self.listaEntregues.heading('#1', text='Código')
+        self.listaEntregues.heading('#1', text='Destinatário(a)')
+        self.listaEntregues.heading('#2', text='Data Retirada')
+        self.listaEntregues.heading('#3', text='Retirada por')
 
         self.listaEntregues.column('#0', width=0, stretch=NO)
-        self.listaEntregues.column('#1', width=1, anchor='center')
-        self.listaEntregues.column('#2', width=1, anchor='center')
-        self.listaEntregues.column('#3', width=90, anchor='center')
-        self.listaEntregues.column('#4', width=80, anchor='center')
-        self.listaEntregues.column('#5', width=70, anchor='center')
-        self.listaEntregues.column('#6', width=70, anchor='center')
+        # self.listaEntregues.column('#1', width=1, anchor='center')
+        # self.listaEntregues.column('#2', width=1, anchor='center')
+        # self.listaEntregues.column('#3', width=90, anchor='center')
+        self.listaEntregues.column('#1', width=80, anchor='center')
+        self.listaEntregues.column('#2', width=70, anchor='center')
+        self.listaEntregues.column('#3', width=70, anchor='center')
 
         # Cor da linha sem estar selecionada
         self.listaEntregues.tag_configure('oddrow', background='gray20')
