@@ -1,9 +1,9 @@
 [![GitHub](https://img.shields.io/github/license/franciscocezar/proj_encomendas?style=plastic)](https://github.com/franciscocezar/proj_encomendas/blob/main/LICENSE)
 # Registro de Encomendas
 ### Sistema para controle de entrada e saída de encomendas. 
-### As informações ficam salvas em um banco de dados para consulta, e um relatório pode ser gerado com todos os dados.
+### As informações ficam salvas em um banco de dados para consulta, e um relatório em PDF pode ser gerado com todos os dados.
 
-#### `A ideia para este projeto veio devido a enorme quantidade de encomendas com a qual os meus colegas e eu tivemos de lidar durante a pandemia, quando eu ainda trabalhava na portaria de um condomínio.`
+#### `A ideia para este projeto surgiu devido à enorme quantidade de encomendas com a qual os meus colegas e eu tivemos de lidar durante a pandemia, quando eu ainda trabalhava na portaria de um condomínio.`
 ###### *Dados fictícios.
 
 ![tabela_pendentes](https://user-images.githubusercontent.com/102926017/203186373-d30f6c47-f5a9-426f-9fd0-1e4fea6528ae.png)
@@ -49,6 +49,8 @@ Utilize o SQLite3, caso você não tenha o 'MySQL Workbench' instalado no seu co
    `CRUD`
    
    `POO (programação orientada a objetos)`
+   
+   `Além de ajudar meus ex-colegas porteiros.`
   
 
 
