@@ -84,44 +84,50 @@ class Funcs:
         self.limpa_tela()
 
         for n in self.listaEntregues.selection():
-            col1, col2, col3, col4, col5 = self.listaEntregues.item(
-                n, 'values'
-            )
-            self.id_ent_entry.insert(END, col1)
-            self.id_entry.insert(END, col2)
-            self.codigo_entry.insert(END, col3)
-            self.destinatario_entry.insert(END, col4)
+            col1, col2, col3, col4 = self.listaEntregues.item(n, 'values')
+
+            # self.id_ent_entry.insert(END, col1)
+            # self.id_entry.insert(END, col2)
+            self.codigo_entry.insert(END, col1)
+            self.destinatario_entry.insert(END, col2)
             # self.data_retirada_entry.insert(END, col5)
-            self.retirada_entry.insert(END, col6)
+            self.dataentrada_entry.insert(END, ''.join(col3.split('/')))
+            self.retirada_entry.insert(END, col4)
 
     def add_encomenda(self):
+        self.conecta_bd()
         self.variaveis()
-
-        if (
-            self.codigo == '' or len(self.codigo) < 4
-            or self.destinatario == '' or len(self.destinatario) < 5
-        ):
-            msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
-            E precisam ter pelo menos 5 caracteres."""
-            messagebox.showinfo(title='AVISO', message=msg)
-        elif len(self.dataentrada_entry.get()) <= 5 \
-                or len(self.dataentrada_entry.get()) == 7:
-            msg2 = """Formato de Data incorreto.
-            Ex.: '010120' ou '01012022'"""
-            messagebox.showinfo(title='AVISO', message=msg2)
+        self.cursor.execute(f"""SELECT codigo FROM Quarentena""")
+        checagem = self.cursor.fetchall()
+        check_lista = [cod[0] for cod in checagem]
+        if self.codigo in check_lista:
+            msg3 = """Este código já foi cadastrado."""
+            messagebox.showinfo(title='AVISO', message=msg3)
         else:
+            if (
+                self.codigo == '' or len(self.codigo) < 4
+                or self.destinatario == '' or len(self.destinatario) < 5
+            ):
+                msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
+                E precisam ter pelo menos 5 caracteres."""
+                messagebox.showinfo(title='AVISO', message=msg)
 
-            self.conecta_bd()
+            elif len(self.dataentrada_entry.get()) <= 5 \
+                    or len(self.dataentrada_entry.get()) == 7:
+                msg2 = """Formato de Data incorreto.
+                Ex.: '010120' ou '01012022'"""
+                messagebox.showinfo(title='AVISO', message=msg2)
 
-            self.cursor.execute(
-                f""" INSERT INTO Quarentena (codigo, destinatario, data_entrada, tipo, funcionario) 
-                                    VALUES ("{self.codigo}", "{self.destinatario}", 
-                                        "{self.dataentrada}", "{self.tipo}", "{self.funcionario}")""")
+            else:
+                self.cursor.execute(
+                    f""" INSERT INTO Quarentena (codigo, destinatario, data_entrada, tipo, funcionario) 
+                                        VALUES ("{self.codigo}", "{self.destinatario}", 
+                                            "{self.dataentrada}", "{self.tipo}", "{self.funcionario}")""")
 
-            self.conn.commit()
-            self.desconecta_bd()
-            self.select_lista()
-            self.limpa_tela()
+                self.conn.commit()
+                self.select_lista()
+                self.limpa_tela()
+        self.desconecta_bd()
 
     def add_saida(self):
         self.variaveis()
@@ -149,25 +155,6 @@ class Funcs:
                 self.select_lista2()
                 self.select_lista()
                 self.limpa_tela()
-
-                # self.conecta_bd()
-                # self.cursor.execute(
-                #     f""" INSERT INTO quarentena_bd (id_pen, codigo,
-                #                                    destinatario, data_entrada, tipo,
-                #                                    funcionario, data_retirada, retirada_por)
-                #         VALUES ("{self.id_pen}", "{self.codigo}",
-                #                 "{self.destinatario}", "{self.dataentrada}", "{self.tipo}",
-                #                 "{self.funcionario}", "{self.data_retirada}", "{self.retirada_por}")""")
-                #
-                # self.conn.commit()
-                # self.desconecta_bd()
-                #
-                # self.conecta_bd()
-                # self.cursor.execute(f""" DELETE FROM Encomendas WHERE id = "{self.id_pen}" """)
-                # self.conn.commit()
-                # self.desconecta_bd()
-                # self.limpa_tela()
-                # self.select_lista()
 
     def altera_dados(self):
         self.variaveis()
@@ -226,7 +213,6 @@ class Funcs:
 
         # Pega os dados selecionados e os monstra na tela
         lista = self.cursor.fetchall()
-        print(lista)
         count = 0
         for i in lista:
             if i[6] is None:
@@ -256,11 +242,11 @@ class Funcs:
             if i[6] is not None:
                 if count % 2 == 0:
                     self.listaEntregues.insert(
-                        '', END, values=[i[1], i[5], i[6]], iid=count, tag=('evenrow',)
+                        '', END, values=[i[0], i[1], i[5], i[6]], iid=count, tag=('evenrow',)
                     )
                 else:
                     self.listaEntregues.insert(
-                        '', END, values=[i[1], i[5], i[6]], iid=count, tag=('oddrow',)
+                        '', END, values=[i[0], i[1], i[5], i[6]], iid=count, tag=('oddrow',)
                     )
                 count += 1
 
@@ -291,7 +277,6 @@ class Funcs:
         for i in buscanomeEnc:
             self.listaEnc.insert('', END, values=i)
             self.listaEntregues.insert('', END, values=i)
-
 
         self.limpa_tela()
         self.desconecta_bd()
