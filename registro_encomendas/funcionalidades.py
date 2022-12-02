@@ -95,33 +95,39 @@ class Funcs:
             self.retirada_entry.insert(END, col4)
 
     def add_encomenda(self):
+        self.conecta_bd()
         self.variaveis()
-
-        if (
-            self.codigo == '' or len(self.codigo) < 4
-            or self.destinatario == '' or len(self.destinatario) < 5
-        ):
-            msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
-            E precisam ter pelo menos 5 caracteres."""
-            messagebox.showinfo(title='AVISO', message=msg)
-        elif len(self.dataentrada_entry.get()) <= 5 \
-                or len(self.dataentrada_entry.get()) == 7:
-            msg2 = """Formato de Data incorreto.
-            Ex.: '010120' ou '01012022'"""
-            messagebox.showinfo(title='AVISO', message=msg2)
+        self.cursor.execute(f"""SELECT codigo FROM Quarentena""")
+        checagem = self.cursor.fetchall()
+        check_lista = [cod[0] for cod in checagem]
+        if self.codigo in check_lista:
+            msg3 = """Este código já foi cadastrado."""
+            messagebox.showinfo(title='AVISO', message=msg3)
         else:
+            if (
+                self.codigo == '' or len(self.codigo) < 4
+                or self.destinatario == '' or len(self.destinatario) < 5
+            ):
+                msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
+                E precisam ter pelo menos 5 caracteres."""
+                messagebox.showinfo(title='AVISO', message=msg)
 
-            self.conecta_bd()
+            elif len(self.dataentrada_entry.get()) <= 5 \
+                    or len(self.dataentrada_entry.get()) == 7:
+                msg2 = """Formato de Data incorreto.
+                Ex.: '010120' ou '01012022'"""
+                messagebox.showinfo(title='AVISO', message=msg2)
 
-            self.cursor.execute(
-                f""" INSERT INTO Quarentena (codigo, destinatario, data_entrada, tipo, funcionario) 
-                                    VALUES ("{self.codigo}", "{self.destinatario}", 
-                                        "{self.dataentrada}", "{self.tipo}", "{self.funcionario}")""")
+            else:
+                self.cursor.execute(
+                    f""" INSERT INTO Quarentena (codigo, destinatario, data_entrada, tipo, funcionario) 
+                                        VALUES ("{self.codigo}", "{self.destinatario}", 
+                                            "{self.dataentrada}", "{self.tipo}", "{self.funcionario}")""")
 
-            self.conn.commit()
-            self.desconecta_bd()
-            self.select_lista()
-            self.limpa_tela()
+                self.conn.commit()
+                self.select_lista()
+                self.limpa_tela()
+        self.desconecta_bd()
 
     def add_saida(self):
         self.variaveis()
@@ -207,7 +213,6 @@ class Funcs:
 
         # Pega os dados selecionados e os monstra na tela
         lista = self.cursor.fetchall()
-        print(lista)
         count = 0
         for i in lista:
             if i[6] is None:
@@ -232,7 +237,6 @@ class Funcs:
                 ORDER BY data_retirada DESC; """
         )
         lista = self.cursor.fetchall()
-        print(lista)
         count = 0
         for i in lista:
             if i[6] is not None:
