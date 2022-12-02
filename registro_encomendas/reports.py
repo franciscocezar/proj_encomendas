@@ -15,14 +15,17 @@ class Relatorios:
             pagesize=A4,
         )
         codigo = self.codigo_entry.get()
-        tabela = pd.read_sql(
-            f"""SELECT codigo, destinatario, data_entrada, tipo, 
-                                        funcionario, data_retirada,  retirada_por
-                                FROM quarentena_bd
-                                WHERE codigo 
-                                LIKE '%{codigo}%'""",
-            self.conn,
-        )
+
+        self.cursor.execute(f"""SELECT * FROM Quarentena WHERE codigo LIKE '%{codigo}%' """)
+        colunas = self.cursor.fetchall()
+        for i in colunas:
+            col0 = i[0]
+            col1 = i[1]
+            col2 = i[2]
+            col3 = i[3]
+            col4 = i[4]
+            col5 = i[5]
+            col6 = i[6]
 
         self.c.setFont('Helvetica-Bold', 24)
         self.c.drawString(150, 790, 'Informações da Encomenda')
@@ -40,13 +43,13 @@ class Relatorios:
         self.c.drawString(150, 790, 'Informações da Encomenda')
 
         self.c.setFont('Helvetica', 18)
-        self.c.drawString(130, 670, str(tabela['codigo'][0]))
-        self.c.drawString(190, 630, str(tabela['destinatario'][0]))
-        self.c.drawString(200, 600, str(tabela['data_entrada'][0]))
-        self.c.drawString(100, 570, str(tabela['tipo'][0]))
-        self.c.drawString(190, 530, str(tabela['funcionario'][0]))
-        self.c.drawString(205, 500, str(tabela['data_retirada'][0]))
-        self.c.drawString(170, 470, str(tabela['retirada_por'][0]))
+        self.c.drawString(130, 670, col0)
+        self.c.drawString(190, 630, col1)
+        self.c.drawString(200, 600, col2)
+        self.c.drawString(100, 570, col3)
+        self.c.drawString(190, 530, col4)
+        self.c.drawString(205, 500, col5)
+        self.c.drawString(170, 470, col6)
 
         self.c.showPage()
         self.c.save()
