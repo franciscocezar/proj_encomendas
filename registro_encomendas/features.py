@@ -1,4 +1,4 @@
-from modulos import *
+from modules import *
 
 
 class Funcs:
@@ -242,11 +242,11 @@ class Funcs:
             if i[6] is not None:
                 if count % 2 == 0:
                     self.listaEntregues.insert(
-                        '', END, values=[i[0], i[1], i[5], i[6]], iid=count, tag=('evenrow',)
+                        '', END, values=[i[1], i[5], i[6], i[0]], iid=count, tag=('evenrow',)
                     )
                 else:
                     self.listaEntregues.insert(
-                        '', END, values=[i[0], i[1], i[5], i[6]], iid=count, tag=('oddrow',)
+                        '', END, values=[i[1], i[5], i[6], i[0]], iid=count, tag=('oddrow',)
                     )
                 count += 1
 
