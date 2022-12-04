@@ -49,7 +49,7 @@ The libraries Tkinter, SQLite3, Webbrowser, Datetime do not need to be installed
    `In addition to helping my former co-workers`
    
 ## Credits:
-This project was based on a project by professor Rafael Serafim from the RfZorzi YouTube channel, which I really recommend for learning Python.
+This project was based on a project by professor Rafael Serafim from the RfZorzi's YouTube channel, which I really recommend for learning Python.
 
 Link to his channel: https://www.youtube.com/watch?v=RtrZcoVD1WM&list=PLqx8fDb-FZDFznZcXb_u_NyiQ7Nai674-
   
