@@ -1,10 +1,10 @@
 [![GitHub](https://img.shields.io/github/license/franciscocezar/proj_encomendas?style=plastic)](https://github.com/franciscocezar/proj_encomendas/blob/main/LICENSE)
-# Registro de Encomendas
-### Sistema para controle de entrada e saída de encomendas. 
-### As informações ficam salvas em um banco de dados para consulta, e um relatório em PDF pode ser gerado com todos os dados.
+# Packages Register
+### System for controlling incoming and outgoing of packages.
+### The information is saved in a database for query, and a PDF report can be generated with all the data.
 
-#### `A ideia para este projeto surgiu devido à enorme quantidade de encomendas com a qual os meus colegas e eu tivemos de lidar durante a pandemia, quando eu ainda trabalhava na portaria de um condomínio.`
-###### *Dados fictícios.
+#### `The idea for this project came about because of the huge amount of packages that my colleagues and I had to deal with during the pandemic, when I was still working as a gatekeeper in a condo.`
+###### *Fictitious data.
 
 ![tabela_pendentes](https://user-images.githubusercontent.com/102926017/203186373-d30f6c47-f5a9-426f-9fd0-1e4fea6528ae.png)
 
@@ -19,7 +19,7 @@
 
 
 
-## Tecnologias utilizadas:
+## Used technologies:
 
 * [Python](https://www.python.org/)
 * [Tkinter](https://docs.python.org/3/library/tkinter.html)
@@ -30,27 +30,26 @@
 * [Awesometkinter](https://pypi.org/project/AwesomeTkinter/)
 * [Reportlab](https://pypi.org/project/reportlab/)
 
-## Requisitos:
+## Requirements:
 
-* Tenha o Python 3 instalado no seu computador.
-* Instale as bibliotecas: 
-  - MySQL.Connector _(pip install mysql-connector-python)_ 
-  - Awesometkinter  _(pip install AwesomeTkinter)_
-  - Reportlab       _(pip install reportlab)_
+* Python 3 or more;
+* Install the libraries: 
+  - MySQL.Connector _(pip install mysql-connector-python)_;
+  - Awesometkinter  _(pip install AwesomeTkinter)_;
+  - Reportlab       _(pip install reportlab)_.
 
-As bibliotecas Tkinter, SQLite3, Webbrowser, Datetime não precisam ser instaladas.
-Utilize o SQLite3, caso você não tenha o 'MySQL Workbench' instalado no seu computador.
+The libraries Tkinter, SQLite3, Webbrowser, Datetime do not need to be installed. Use SQLite3 if you do not have 'MySQL Workbench' installed on your computer.
 
 
-## Objetivo com este projeto:
-#### Praticar:
+## My purpose with this project:
+#### Practicing:
    `Python`
    
    `CRUD`
    
-   `POO (programação orientada a objetos)`
+   `OOP (object-oriented programming)`
    
-   `Além de ajudar meus ex-colegas porteiros.`
+   `In addition to helping my former co-workers`
   
 
 
