@@ -1,7 +1,7 @@
 from entriesValidators import Validators
 from frameGrad import GradientFrame
-from funcionalidades import Funcs
-from modulos import *
+from features import Funcs
+from modules import *
 from reports import Relatorios
 
 root = Tk()
