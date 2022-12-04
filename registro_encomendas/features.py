@@ -18,8 +18,8 @@ class Funcs:
         self.conn = mysql.connector.connect(
                                             host='localhost',
                                             user='root',       # Configurações padrão
-                                            password='55335904WIFI',
-                                            database='historico_encomendas')
+                                            password='<sua_senha>',
+                                            database='<nome_do_seu_banco_de_dados>')
         self.cursor = self.conn.cursor()
         print('Conectando ao banco de dados')
 
