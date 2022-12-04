@@ -8,12 +8,9 @@
 
 ![tabela_pendentes](https://user-images.githubusercontent.com/102926017/203186373-d30f6c47-f5a9-426f-9fd0-1e4fea6528ae.png)
 
-![tabela_entregues](https://user-images.githubusercontent.com/102926017/203185509-4c926bad-d354-4515-9b04-bc23452f30b9.png)
-
-![Captura de Tela 2022-11-21 às 21 46 42](https://user-images.githubusercontent.com/102926017/203187210-d8d0b8f2-f071-448c-a038-f98a99cf3f64.png)
-
-![Captura de Tela 2022-11-21 às 21 49 29](https://user-images.githubusercontent.com/102926017/203187631-ee1ada5d-e6f9-4ac2-9ab1-71520294eff7.png)
-
+![Captura de Tela 2022-12-04 às 15 52 20](https://user-images.githubusercontent.com/102926017/205509704-68983ee9-1783-4257-9cea-663c09e100f0.png)
+![Captura de Tela 2022-12-04 às 16 04 27](https://user-images.githubusercontent.com/102926017/205510363-085632a9-af81-46c9-883e-5e4cb7b3c32c.png)
+![Captura de Tela 2022-12-04 às 16 03 02](https://user-images.githubusercontent.com/102926017/205510366-fa4f0f90-4def-4dcc-aa02-f921e756778e.png)
 ![Captura de Tela 2022-11-21 às 21 52 15](https://user-images.githubusercontent.com/102926017/203187881-23e1ba20-29d1-465e-8942-0b2f0cbe270d.png)
 ##
 
