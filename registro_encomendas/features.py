@@ -18,8 +18,8 @@ class Funcs:
         self.conn = mysql.connector.connect(
                                             host='localhost',
                                             user='root',       # Configurações padrão
-                                            password='<sua_senha>',
-                                            database='<nome_do_seu_banco_de_dados>')
+                                            password='<password>',
+                                            database='<database>')
         self.cursor = self.conn.cursor()
         print('Conectando ao banco de dados')
 
@@ -53,8 +53,9 @@ class Funcs:
         self.destinatario = self.destinatario_entry.get().title().strip()
         self.tipo = self.tipo_entry.get().title()
         self.funcionario = self.funcionario_entry.get().title()
-        dataen = self.dataentrada_entry.get()
-        self.dataentrada = f'{dataen[:2]}/{dataen[2:4]}/{dataen[4:]}'
+        # dataen = self.dataentrada_entry.get()
+        # self.dataentrada = f'{dataen[:2]}/{dataen[2:4]}/{dataen[4:]}'
+        self.dataentrada = datetime.now().strftime('%d/%m/%Y %H:%M')
 
         self.id_ent = self.id_ent_entry.get()
         self.retirada_por = self.retirada_entry.get().title()
@@ -76,7 +77,7 @@ class Funcs:
             # self.id_entry.insert(END, col1)
             self.codigo_entry.insert(END, col1)
             self.destinatario_entry.insert(END, col2)
-            self.dataentrada_entry.insert(END, ''.join(col3.split('/')))
+            self.dataentrada_entry.insert(END, col3)
             self.tipo_entry.insert(END, col4)
             self.funcionario_entry.insert(END, col5)
 
@@ -88,11 +89,11 @@ class Funcs:
 
             # self.id_ent_entry.insert(END, col1)
             # self.id_entry.insert(END, col2)
-            self.codigo_entry.insert(END, col1)
-            self.destinatario_entry.insert(END, col2)
+            self.codigo_entry.insert(END, col4)
+            self.destinatario_entry.insert(END, col1)
             # self.data_retirada_entry.insert(END, col5)
-            self.dataentrada_entry.insert(END, ''.join(col3.split('/')))
-            self.retirada_entry.insert(END, col4)
+            self.dataentrada_entry.insert(END, col2)
+            self.retirada_entry.insert(END, col3)
 
     def add_encomenda(self):
         self.conecta_bd()
@@ -111,12 +112,6 @@ class Funcs:
                 msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
                 E precisam ter pelo menos 5 caracteres."""
                 messagebox.showinfo(title='AVISO', message=msg)
-
-            elif len(self.dataentrada_entry.get()) <= 5 \
-                    or len(self.dataentrada_entry.get()) == 7:
-                msg2 = """Formato de Data incorreto.
-                Ex.: '010120' ou '01012022'"""
-                messagebox.showinfo(title='AVISO', message=msg2)
 
             else:
                 self.cursor.execute(
@@ -159,25 +154,17 @@ class Funcs:
     def altera_dados(self):
         self.variaveis()
 
-        if len(self.dataentrada_entry.get()) <= 5 \
-                or len(self.dataentrada_entry.get()) == 7:
-            msg2 = """Formato de Data incorreto.
-            Ex.: '010120' ou '01012022'"""
-            messagebox.showinfo(title='AVISO', message=msg2)
-
-        else:
-
-            self.conecta_bd()
-            self.cursor.execute(
-                f"""UPDATE Quarentena 
-                    SET codigo = "{self.codigo}", destinatario = "{self.destinatario}", 
-                        data_entrada = "{self.dataentrada}", tipo = "{self.tipo}", 
-                        funcionario = "{self.funcionario}"
-                    WHERE codigo = "{self.codigo}" """)
-            self.conn.commit()
-            self.desconecta_bd()
-            self.select_lista()
-            self.limpa_tela()
+        self.conecta_bd()
+        self.cursor.execute(
+            f"""UPDATE Quarentena 
+                SET codigo = "{self.codigo}", destinatario = "{self.destinatario}", 
+                    data_entrada = "{self.dataentrada}", tipo = "{self.tipo}", 
+                    funcionario = "{self.funcionario}"
+                WHERE codigo = "{self.codigo}" """)
+        self.conn.commit()
+        self.desconecta_bd()
+        self.select_lista()
+        self.limpa_tela()
 
     def deleta_encomenda(self):
         self.variaveis()
@@ -280,3 +267,18 @@ class Funcs:
 
         self.limpa_tela()
         self.desconecta_bd()
+
+    def self_destruction(self):
+        # Delete data after 30 days of input.
+        self.conecta_bd()
+        self.cursor.execute("SELECT data_entrada FROM Quarentena;")
+        for date in self.cursor.fetchall():
+            datetime_format = datetime.strptime(date[0][:10], '%d/%m/%Y')
+            thirty_more_days = datetime_format + timedelta(30)
+            if thirty_more_days < datetime.now():
+                date_str_format = datetime_format.strftime('%d/%m/%Y')
+                end_time = f'DELETE FROM Quarentena WHERE data_entrada LIKE "%{date_str_format}%"'
+                self.cursor.execute(end_time)
+                self.conn.commit()
+        self.desconecta_bd()
+
