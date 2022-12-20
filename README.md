@@ -1,7 +1,7 @@
 [![GitHub](https://img.shields.io/github/license/franciscocezar/proj_encomendas?style=plastic)](https://github.com/franciscocezar/proj_encomendas/blob/main/LICENSE)
 # Packages Register
 ### System for controlling incoming and outgoing of packages.
-### The information is saved in a database for query, and a PDF report can be generated with all the data.
+### The information is saved in a database for query, and a PDF report can be generated with all the data. People have 30 days to claim their package (by saying they haven't received it). After that, the data is self-destructed from the database.
 
 #### `The idea for this project came about because of the huge amount of packages that my colleagues and I had to deal with during the pandemic, when I was still working as a gatekeeper in a condo.`
 ###### *Fictitious data.
