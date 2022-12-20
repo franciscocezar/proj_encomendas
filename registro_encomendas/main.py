@@ -16,6 +16,7 @@ class Application(Funcs, Relatorios, Validators):
         self.widgets_frame1()
         self.lista_frame2()
         self.montaTabelas()
+        self.self_destruction()
         self.select_lista()
         self.select_lista2()
         self.Menus()
@@ -95,12 +96,6 @@ class Application(Funcs, Relatorios, Validators):
         self.id_entry = Entry(self.frame_1)
         self.id_ent_entry = Entry(self.frame_1)
 
-        # Botão Retirada/Confirmar
-        # self.bt_reti = atk.Button3d(self.lb_retirada, text='Confirmar Retirada', command=self.add_saida)
-        # self.bt_reti.place(relx=0.6, rely=0.8, relwidth=0.2, relheight=0.15)
-
-        # self.id_entry.place(relx=0.53, rely=0.1, relwidth=0.03, relheight=0.08)
-
         # Label e Entrada Codigo
         self.lb_codigo = Label(
             self.frame_1, text='Código', bg='gray20', fg='white'
@@ -145,13 +140,13 @@ class Application(Funcs, Relatorios, Validators):
         self.lb_dataentrada = Label(
             self.frame_1, text='Data:', bg='gray20', fg='white'
         )
-        self.lb_dataentrada.place(relx=0.376, rely=0.6)
+        # self.lb_dataentrada.place(relx=0.376, rely=0.6)
 
         self.dataentrada_entry = Entry(
             self.frame_1, validate='key', validatecommand=self.valid
         )
-        self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
-        atk.tooltip(self.dataentrada_entry, "'010122' ou '01012022'")
+        # self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
+        # atk.tooltip(self.dataentrada_entry, "'010122' ou '01012022'")
 
         # Label, Entry and Button
         self.lb_retirada = LabelFrame(self.frame_1, text='Retirado por')
