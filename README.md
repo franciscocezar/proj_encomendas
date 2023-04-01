@@ -1,7 +1,16 @@
 [![GitHub](https://img.shields.io/github/license/franciscocezar/proj_encomendas?style=plastic)](https://github.com/franciscocezar/proj_encomendas/blob/main/LICENSE)
-# Packages Register
-### System for controlling incoming and outgoing of packages.
-### The information is saved in a database for query, and a PDF report can be generated with all the data. People have 30 days to claim their package (by saying they haven't received it). After that, the data is self-destructed from the database.
+# Package Delivery Management System for Condominiums
+### This program aims to simplify and organize the process of receiving packages. Using the program, it is possible to register details about each delivery, such as:
+ 
+- date and time of delivery of the package (automatically generated);
+- package code;
+- the recipient's name and address;
+- name of the employee who received it;
+- pickup date and time (automatically generated) and
+- name of the person who picked it up.
+
+It also generates a report with all the information. The program helps improve the resident's experience and increase the productivity of the doorman team, ensuring greater efficiency and security in the delivery process.
+
 
 #### `The idea for this project came about because of the huge amount of packages that my colleagues and I had to deal with during the pandemic, when I was still working as a gatekeeper in a condo.`
 ###### *Fictitious data.
@@ -36,21 +45,6 @@
   - Reportlab       _(pip install reportlab)_.
 
 The libraries Tkinter, SQLite3, Webbrowser, Datetime do not need to be installed. Use SQLite3 if you do not have 'MySQL Workbench' installed on your computer.
-
-
-## My purpose with this project:
-#### Practicing:
-   `Python`
-   
-   `CRUD`
-   
-   `OOP (object-oriented programming)`
-   
-   `In addition to helping my former co-workers`
    
 ## Credits:
 This project was based on a project by professor Rafael Serafim from the [RfZorzi's YouTube channel](https://www.youtube.com/watch?v=RtrZcoVD1WM&list=PLqx8fDb-FZDFznZcXb_u_NyiQ7Nai674-), which I really recommend for learning Python.
-
-  
-
-
