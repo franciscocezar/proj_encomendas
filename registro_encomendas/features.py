@@ -12,12 +12,10 @@ class Funcs:
         self.dataentrada_entry.delete(0, END)
 
     def conecta_bd(self):
-        # self.conn = sqlite3.connect(
-        #     'registro_encomendas/bancodados_encomendas.db'
-        # )
+        # self.conn = sqlite3.connect('registro_encomendas/database_name.db')
         self.conn = mysql.connector.connect(
-                                            host='localhost',
-                                            user='root',       # Configurações padrão
+                                            host='<localhost>',
+                                            user='<root>',
                                             password='<password>',
                                             database='<database>')
         self.cursor = self.conn.cursor()
@@ -96,6 +94,7 @@ class Funcs:
             self.retirada_entry.insert(END, col3)
 
     def add_encomenda(self):
+        _regex = re.compile(r'[A-z0-9]{4,30}')
         self.conecta_bd()
         self.variaveis()
         self.cursor.execute(f"""SELECT codigo FROM Quarentena""")
@@ -105,12 +104,9 @@ class Funcs:
             msg3 = """Este código já foi cadastrado."""
             messagebox.showinfo(title='AVISO', message=msg3)
         else:
-            if (
-                self.codigo == '' or len(self.codigo) < 4
-                or self.destinatario == '' or len(self.destinatario) < 5
-            ):
-                msg = """Os campos 'Código' e 'Destinatário(a)' são obrigatórios. 
-                E precisam ter pelo menos 5 caracteres."""
+            if not _regex.findall(self.codigo) or not _regex.findall(self.destinatario):
+                msg = """Campos 'Código' e 'Destinatário(a)' são obrigatórios 
+                ou foram preenchidos incorretamente."""
                 messagebox.showinfo(title='AVISO', message=msg)
 
             else:

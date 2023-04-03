@@ -12,3 +12,5 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Image, SimpleDocTemplate
 
 import mysql.connector
+import re
+

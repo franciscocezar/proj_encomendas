@@ -54,28 +54,25 @@ class Application(Funcs, Relatorios, Validators):
         self.frame_2.place(relx=0.02, rely=0.5, relwidth=0.96, relheight=0.46)
 
     def widgets_frame1(self):
-        # Botão Limpar
+
         self.bt_limpar = atk.Button3d(
             self.frame_1, text='Limpar', command=self.limpa_tela
         )
         self.bt_limpar.place(relx=0.3, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_limpar, 'Limpar Campos')
 
-        # Botão Buscar
         self.bt_buscar = atk.Button3d(
             self.frame_1, text='Buscar', command=self.busca_encomenda
         )
         self.bt_buscar.place(relx=0.41, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_buscar, 'Buscar por Nome')
 
-        # Botão Novo
         self.bt_novo = atk.Button3d(
             self.frame_1, text='Novo', command=self.add_encomenda
         )
         self.bt_novo.place(relx=0.63, rely=0.1, relwidth=0.1, relheight=0.15)
         atk.tooltip(self.bt_novo, 'Registar Nova Encomenda')
 
-        # Botão alterar
         self.bt_alterar = atk.Button3d(
             self.frame_1, text='Alterar', command=self.altera_dados
         )
@@ -84,7 +81,6 @@ class Application(Funcs, Relatorios, Validators):
         )
         atk.tooltip(self.bt_alterar, 'Alterar Dados')
 
-        # Criação do botao apagar
         self.bt_apagar = atk.Button3d(
             self.frame_1, text='Apagar', command=self.deleta_encomenda
         )
@@ -92,11 +88,10 @@ class Application(Funcs, Relatorios, Validators):
         atk.tooltip(self.bt_apagar, 'Exclui Registro')
 
         """Entrada de Dados"""
-        # Entrada IDs
+
         self.id_entry = Entry(self.frame_1)
         self.id_ent_entry = Entry(self.frame_1)
 
-        # Label e Entrada Codigo
         self.lb_codigo = Label(
             self.frame_1, text='Código', bg='gray20', fg='white'
         )
@@ -105,7 +100,6 @@ class Application(Funcs, Relatorios, Validators):
         self.codigo_entry = Entry(self.frame_1)
         self.codigo_entry.place(relx=0.05, rely=0.15, relwidth=0.20)
 
-        # Label e Entrada Destinatário
 
         self.lb_destinatario = Label(
             self.frame_1, text='Destinatário(a)', bg='gray20', fg='white'
@@ -115,7 +109,6 @@ class Application(Funcs, Relatorios, Validators):
         self.destinatario_entry = Entry(self.frame_1)
         self.destinatario_entry.place(relx=0.05, rely=0.45, relwidth=0.5)
 
-        # Label e Entrada Tipo de Encomenda
         self.lb_tipo = Label(
             self.frame_1, text='Tipo', bg='gray20', fg='white'
         )
@@ -124,7 +117,6 @@ class Application(Funcs, Relatorios, Validators):
         self.tipo_entry = Entry(self.frame_1)
         self.tipo_entry.place(relx=0.5970, rely=0.45, relwidth=0.306)
 
-        # Label e Entrada Funcionário
         self.lb_funcionario = Label(
             self.frame_1, text='Funcionário(a)', bg='gray20', fg='white'
         )
@@ -136,19 +128,14 @@ class Application(Funcs, Relatorios, Validators):
         )
         self.funcionario_entry.place(relx=0.05, rely=0.7, relwidth=0.2)
 
-        # Label e Entry Data Entrada
         self.lb_dataentrada = Label(
             self.frame_1, text='Data:', bg='gray20', fg='white'
         )
-        # self.lb_dataentrada.place(relx=0.376, rely=0.6)
 
         self.dataentrada_entry = Entry(
             self.frame_1, validate='key', validatecommand=self.valid
         )
-        # self.dataentrada_entry.place(relx=0.3, rely=0.7, relwidth=0.2)
-        # atk.tooltip(self.dataentrada_entry, "'010122' ou '01012022'")
 
-        # Label, Entry and Button
         self.lb_retirada = LabelFrame(self.frame_1, text='Retirado por')
         self.lb_retirada.place(
             relx=0.6, rely=0.59, relwidth=0.3, relheight=0.35
@@ -169,7 +156,6 @@ class Application(Funcs, Relatorios, Validators):
 
         self.aba1 = GradientFrame(self.abas)
 
-        # self.aba1.configure(background='#e6e6fa')
 
         self.abas.add(self.aba1, text='Pendentes')
 
@@ -197,7 +183,6 @@ class Application(Funcs, Relatorios, Validators):
             selectmode='extended',
         )
         self.listaEnc.heading('#0', text='',)
-        # self.listaEnc.heading('#1', text='ID')
         self.listaEnc.heading('#1', text='Código')
         self.listaEnc.heading('#2', text='Destinatário(a)')
         self.listaEnc.heading('#3', text='Data Entrada')
@@ -210,7 +195,6 @@ class Application(Funcs, Relatorios, Validators):
         self.listaEnc.column('#3', width=80, anchor='center')
         self.listaEnc.column('#4', width=70, anchor='center')
         self.listaEnc.column('#5', width=70, anchor='center')
-        # self.listaEnc.column('#6', width=70, anchor='center')
 
         # Cor da linha sem estar selecionada
         self.listaEnc.tag_configure('oddrow', background='gray20')
@@ -240,17 +224,12 @@ class Application(Funcs, Relatorios, Validators):
             '#0',
             text='',
         )
-        # self.listaEntregues.heading('#1', text='ID')
-        # self.listaEntregues.heading('#2', text='ID-Pen')
-        # self.listaEntregues.heading('#1', text='Código')
+
         self.listaEntregues.heading('#1', text='Destinatário(a)')
         self.listaEntregues.heading('#2', text='Data Retirada')
         self.listaEntregues.heading('#3', text='Retirada por')
 
         self.listaEntregues.column('#0', width=0, stretch=NO)
-        # self.listaEntregues.column('#1', width=1, anchor='center')
-        # self.listaEntregues.column('#2', width=1, anchor='center')
-        # self.listaEntregues.column('#3', width=90, anchor='center')
         self.listaEntregues.column('#1', width=80, anchor='center')
         self.listaEntregues.column('#2', width=70, anchor='center')
         self.listaEntregues.column('#3', width=70, anchor='center')
