@@ -9,6 +9,9 @@ root = Tk()
 
 class Application(Funcs, Relatorios, Validators):
     def __init__(self):
+        super().__init__()
+        self.frame_1 = None
+        self.frame_2 = None
         self.root = root
         self.validateEntries()
         self.tela()
@@ -32,7 +35,6 @@ class Application(Funcs, Relatorios, Validators):
         app_center_coordinate_x = (screen_width / 3.5) - (APP_WIDTH / 3.5)
         app_center_coordinate_y = (screen_height / 4) - (APP_HEIGHT / 4)
 
-        # Position App to the Centre of the Screen
         self.root.geometry(f"{APP_WIDTH}x{APP_HEIGHT}+{int(app_center_coordinate_x)}+{int(app_center_coordinate_y)}")
 
     def tela(self):
@@ -40,7 +42,6 @@ class Application(Funcs, Relatorios, Validators):
         self.root.configure(bg='gray20')
         self.root.geometry('700x500')
         self.root.resizable(True, True)
-        # self.root.maxsize(width=900, height=700)
         self.root.attributes('-alpha', 0.0)
         self.root.minsize(800, 600)
         self.center()
@@ -89,9 +90,6 @@ class Application(Funcs, Relatorios, Validators):
 
         """Entrada de Dados"""
 
-        self.id_entry = Entry(self.frame_1)
-        self.id_ent_entry = Entry(self.frame_1)
-
         self.lb_codigo = Label(
             self.frame_1, text='Código', bg='gray20', fg='white'
         )
@@ -99,7 +97,6 @@ class Application(Funcs, Relatorios, Validators):
 
         self.codigo_entry = Entry(self.frame_1)
         self.codigo_entry.place(relx=0.05, rely=0.15, relwidth=0.20)
-
 
         self.lb_destinatario = Label(
             self.frame_1, text='Destinatário(a)', bg='gray20', fg='white'
@@ -161,7 +158,6 @@ class Application(Funcs, Relatorios, Validators):
 
         #  *** ABA PENDENTES ***
         style = ttk.Style()
-        # style.theme_use('alt')
         style.configure(
             'Treeview',
             background='gray20',
@@ -210,7 +206,6 @@ class Application(Funcs, Relatorios, Validators):
         self.listaEnc.bind('<Double-1>', self.OnDoubleClick)
 
         # *** ABA ENTREGUES ***
-
         self.aba2 = GradientFrame(self.abas)
         self.abas.add(self.aba2, text='Entregues')
 

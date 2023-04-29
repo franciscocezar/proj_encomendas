@@ -2,8 +2,17 @@ from modules import *
 
 
 class Funcs:
+    def __init__(self):
+        self.listaEntregues = None
+        self.listaEnc = None
+        self.dataentrada_entry = None
+        self.funcionario_entry = None
+        self.retirada_entry = None
+        self.destinatario_entry = None
+        self.codigo_entry = None
+        self.tipo_entry = None
+
     def limpa_tela(self):
-        self.id_entry.delete(0, END)
         self.codigo_entry.delete(0, END)
         self.destinatario_entry.delete(0, END)
         self.tipo_entry.delete(0, END)
@@ -28,7 +37,6 @@ class Funcs:
     def montaTabelas(self):
         self.conecta_bd()
 
-        # Criar Tabela
         self.quarentenabd = self.cursor.execute(
             """
          CREATE TABLE IF NOT EXISTS Quarentena(
@@ -46,33 +54,20 @@ class Funcs:
         self.desconecta_bd()
 
     def variaveis(self):
-        self.id_pen = self.id_entry.get()
         self.codigo = self.codigo_entry.get().upper().strip()
         self.destinatario = self.destinatario_entry.get().title().strip()
         self.tipo = self.tipo_entry.get().title()
         self.funcionario = self.funcionario_entry.get().title()
-        # dataen = self.dataentrada_entry.get()
-        # self.dataentrada = f'{dataen[:2]}/{dataen[2:4]}/{dataen[4:]}'
         self.dataentrada = datetime.now().strftime('%d/%m/%Y %H:%M')
 
-        self.id_ent = self.id_ent_entry.get()
         self.retirada_por = self.retirada_entry.get().title()
         self.data_retirada = datetime.now().strftime('%d/%m/%Y %H:%M')
 
     def OnDoubleClick(self, event):
-        # Função Duplo Clique na lista mostrada na tela.
 
-        # Primeiro, apaga os dados que já estiverem nas Entrys, para não dar conflito.
         self.limpa_tela()
-
-        # Seleciona o item clicado e os insere de volta nos campos Entry.
         for n in self.listaEnc.selection():
-            # Desempacota a lista.
-            col1, col2, col3, col4, col5 = self.listaEnc.item(
-                n, 'values'
-            )
-            # Insere cada item em sua respectiva variável entry.
-            # self.id_entry.insert(END, col1)
+            col1, col2, col3, col4, col5 = self.listaEnc.item(n, 'values')
             self.codigo_entry.insert(END, col1)
             self.destinatario_entry.insert(END, col2)
             self.dataentrada_entry.insert(END, col3)
@@ -84,14 +79,11 @@ class Funcs:
 
         for n in self.listaEntregues.selection():
             col1, col2, col3, col4 = self.listaEntregues.item(n, 'values')
-
-            # self.id_ent_entry.insert(END, col1)
-            # self.id_entry.insert(END, col2)
-            self.codigo_entry.insert(END, col4)
             self.destinatario_entry.insert(END, col1)
-            # self.data_retirada_entry.insert(END, col5)
             self.dataentrada_entry.insert(END, col2)
             self.retirada_entry.insert(END, col3)
+            self.codigo_entry.insert(END, col4)
+
 
     def add_encomenda(self):
         _regex = re.compile(r'[A-z0-9]{4,30}')
@@ -183,18 +175,13 @@ class Funcs:
             self.limpa_tela()
 
     def select_lista(self):
-        # Mostra o Banco de Dados na Tela - Aba Pendentes
 
-        # deleta os dados que aparecem na tela para que a lista seja atualizada.
         self.listaEnc.delete(*self.listaEnc.get_children())
-
-        # Conecta ao Banco e seleciona os dados
         self.conecta_bd()
         self.cursor.execute(
             """ SELECT * FROM Quarentena
                 ORDER BY data_entrada ASC; """)
 
-        # Pega os dados selecionados e os monstra na tela
         lista = self.cursor.fetchall()
         count = 0
         for i in lista:
@@ -212,7 +199,6 @@ class Funcs:
         self.desconecta_bd()
 
     def select_lista2(self):
-        # Mostra o Banco de Dados na Tela - Aba Entregues
         self.listaEntregues.delete(*self.listaEntregues.get_children())
         self.conecta_bd()
         self.cursor.execute(
@@ -265,7 +251,6 @@ class Funcs:
         self.desconecta_bd()
 
     def self_destruction(self):
-        # Delete data after 30 days of input.
         self.conecta_bd()
         self.cursor.execute("SELECT data_entrada FROM Quarentena;")
         for date in self.cursor.fetchall():
