@@ -15,15 +15,26 @@ It also generates a report with all the information. The program helps improve t
 #### `The idea for this project came about because of the huge amount of packages that my colleagues and I had to deal with during the pandemic, when I was still working as a gatekeeper in a condo.`
 ###### *Fictitious data.
 
-![Captura de Tela 2022-12-19 às 20 59 30](https://user-images.githubusercontent.com/102926017/208551575-7813a379-d263-41b3-bb99-bba86908d490.png)
-![Captura de Tela 2022-12-19 às 21 10 39](https://user-images.githubusercontent.com/102926017/208551921-0ef5c058-a41e-487f-9c9d-ecb4b5589fa9.png)
-![Captura de Tela 2022-12-04 às 16 04 27](https://user-images.githubusercontent.com/102926017/205510363-085632a9-af81-46c9-883e-5e4cb7b3c32c.png)
-![Captura de Tela 2022-12-04 às 16 03 02](https://user-images.githubusercontent.com/102926017/205510366-fa4f0f90-4def-4dcc-aa02-f921e756778e.png)
-![Captura de Tela 2022-11-21 às 21 52 15](https://user-images.githubusercontent.com/102926017/203187881-23e1ba20-29d1-465e-8942-0b2f0cbe270d.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/208551575-7813a379-d263-41b3-bb99-bba86908d490.png" align="center">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/208551921-0ef5c058-a41e-487f-9c9d-ecb4b5589fa9.png" align="center">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/205510363-085632a9-af81-46c9-883e-5e4cb7b3c32c.png" align="center">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/205510366-fa4f0f90-4def-4dcc-aa02-f921e756778e.png" align="center">
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/203187881-23e1ba20-29d1-465e-8942-0b2f0cbe270d.png" align="center">
+</p>
+
 ##
-
-<img src="https://user-images.githubusercontent.com/102926017/235326442-8db8ee52-144e-48d8-8cb5-a4a6539c7554.png" width="400" height="600" style="display: block; margin: 0 auto;">
-
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/102926017/235326442-8db8ee52-144e-48d8-8cb5-a4a6539c7554.png" width="400" height="600" align="center">
+</p>
 
 ## Used technologies:
 
